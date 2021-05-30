@@ -1,8 +1,16 @@
 package com.uestc.run.basebase
 
+import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import com.uestc.jinjiang.publish.R
 
 /**
  * Created by PengFeifei on 2018/10/27.
@@ -30,4 +38,13 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
 
+}
+
+
+fun Context.getDrawable2(@DrawableRes id: Int): Drawable? {
+    return ContextCompat.getDrawable(this, id)
+}
+
+fun Fragment.getDrawable(@DrawableRes id: Int): Drawable? {
+    return requireContext().getDrawable2(id)
 }
