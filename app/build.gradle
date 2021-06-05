@@ -66,7 +66,10 @@ dependencies {
     //可选
     implementation 'com.github.angcyo.DslTablayout:ViewPager2Delegate:2.0.0'
 
-    implementation 'com.github.tbruyelle:rxpermissions:0.12'
+    implementation "com.github.xinyuez:easypermissions:2.0.1"
+
+    implementation 'com.droidninja:filepicker:2.2.5'
+
 
 
 

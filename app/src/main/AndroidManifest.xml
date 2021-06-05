@@ -51,6 +51,15 @@
         <activity android:name=".file.ppt.PptActivity" />
         <activity android:name=".file.PreviewAttachmentActivity" />
 
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.uestc.jinjiang.publish"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
 
 
 
