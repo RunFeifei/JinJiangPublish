@@ -39,16 +39,15 @@ class BasicTabFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        listAdapter=ListAdapter(listView)
-        listView.layoutManager= LinearLayoutManager(this@BasicTabFragment.context, LinearLayoutManager.VERTICAL, false)
-        listView.adapter= listAdapter
+        listAdapter = ListAdapter(listView)
+        listView.layoutManager =
+            LinearLayoutManager(this@BasicTabFragment.context, LinearLayoutManager.VERTICAL, false)
+        listView.adapter = listAdapter
         val list = mutableListOf<FileDisplayInfo>()
         list.add(FileDisplayInfo())
         list.add(FileDisplayInfo())
         list.add(FileDisplayInfo())
         listAdapter.setData(list)
-
-
     }
 
 
