@@ -27,13 +27,13 @@ import java.util.*
  * @Description 基本信息tab
  * @date 2021/5/30
  */
-class BasicTabFragment : Fragment() {
+class BasicTabFragment : Fragment(), ListAdapter.OnItemClickListener {
 
     lateinit var listView: RecyclerView
     lateinit var textTitle: TextView
     lateinit var listAdapter: ListAdapter
     lateinit var popupWindow: CommonPopupWindow
-    var docPaths = mutableListOf<String>()
+//    var docPaths = mutableListOf<String>()
 
 
     override fun onCreateView(
@@ -57,6 +57,7 @@ class BasicTabFragment : Fragment() {
 
     private fun initRecyclerView() {
         listAdapter = ListAdapter(listView)
+        listAdapter.clickListener = this
         listView.layoutManager =
             LinearLayoutManager(this@BasicTabFragment.context, LinearLayoutManager.VERTICAL, false)
         listView.adapter = listAdapter
@@ -94,15 +95,28 @@ class BasicTabFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_DOC && resultCode == Activity.RESULT_OK && data != null) {
             val dataList = ArrayList<Uri>(data.getParcelableArrayListExtra<Uri>(KEY_SELECTED_DOCS))
-            docPaths.clear()
-            docPaths.addAll(dataList.map {
+            var paths = dataList.map {
                 Utils.toPath(it, context)
-            })
+            }
+            var build = FileDisplayInfo.buildFromFilePath(paths[0])
+
         }
 
     }
 
+    private fun onPickFile(filePath: String?) {
+        filePath ?: return
+    }
 
+    override fun onItemClickListener(
+        view: View?,
+        fileDisplayInfo: FileDisplayInfo?,
+        position: Int
+    ) {
+        fileDisplayInfo ?: return
+        var fileType = fileDisplayInfo.fileType
+
+    }
 }
 
 

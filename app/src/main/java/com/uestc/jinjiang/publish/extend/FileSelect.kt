@@ -14,8 +14,6 @@ import java.util.*
 
 const val RC_PHOTO_PICKER_PERM = 123
 const val RC_FILE_PICKER_PERM = 321
-private const val CUSTOM_REQUEST_CODE = 532
-private const val MAX_ATTACHMENT_COUNT = 10
 
 
 @AfterPermissionGranted(RC_FILE_PICKER_PERM)
