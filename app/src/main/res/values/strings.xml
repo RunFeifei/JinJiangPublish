@@ -11,6 +11,9 @@
     <string name="rationale_photo_picker">请授予权限</string>
     <string name="rationale_doc_picker">请授予权限</string>
 
+    <string name="videos">视频</string>
+    <string name="images">图片</string>
+
 
     <string-array name="index_titles">
         <item>浏览器demo</item>
