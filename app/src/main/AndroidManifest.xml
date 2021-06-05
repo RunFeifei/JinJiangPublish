@@ -51,6 +51,18 @@
         <activity android:name=".file.ppt.PptActivity" />
         <activity android:name=".file.PreviewAttachmentActivity" />
 
+        <activity
+            android:name=".edit.PublishActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BlackFront_AppTheme"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".edit.ShowArtActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.uestc.jinjiang.publish"

@@ -3,6 +3,7 @@ package com.uestc.jinjiang.publish
 import android.content.Intent
 import android.os.Bundle
 import com.uestc.jinjiang.publish.databinding.ActivityMainBinding
+import com.uestc.jinjiang.publish.edit.PublishActivity
 import com.uestc.run.basebase.BaseActivity
 
 
@@ -16,6 +17,7 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
+        startActivity(Intent(this@MainActivity, PublishActivity::class.java))
     }
 
 
@@ -25,6 +27,7 @@ class MainActivity : BaseActivity() {
             startActivity(Intent(this, TabActivity::class.java))
         }
         binding.item02.setOnClickListener {
+            startActivity(Intent(this@MainActivity, PublishActivity::class.java))
         }
 
     }

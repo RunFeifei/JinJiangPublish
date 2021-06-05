@@ -35,6 +35,9 @@ class BasicTabFragment : Fragment() {
         textTitle = view.findViewById(R.id.textTitle) as TextView
         textTitle.text = System.currentTimeMillis().toString()
         listView = view.findViewById(R.id.listView) as RecyclerView
+        (view.findViewById(R.id.imgAdd) as View).setOnClickListener {
+
+        }
         initRecyclerView()
     }
 

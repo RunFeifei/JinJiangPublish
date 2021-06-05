@@ -80,7 +80,7 @@ fun Activity.onPickPhoto(): ArrayList<Uri> {
         .enableImagePicker(true)
         .setCameraPlaceholder(R.drawable.custom_camera)
         .withOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-        .pickPhoto(this, CUSTOM_REQUEST_CODE)
+        .pickPhoto(this)
     return photoPaths;
 
 }
