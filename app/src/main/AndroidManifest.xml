@@ -43,8 +43,8 @@
 
         <activity
             android:name=".TabActivity"
-            android:theme="@style/BlackFront_AppTheme"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:theme="@style/BlackFront_AppTheme" />
 
 
         <activity
