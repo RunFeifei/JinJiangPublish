@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="81dp"
+    android:background="#FFFFFF">
+
+    <ImageView
+        android:id="@+id/imgFile"
+        android:layout_width="39dp"
+        android:layout_height="39dp"
+        android:layout_marginLeft="15dp"
+        android:src="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textDesc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:textColor="#FF212223"
+        android:textSize="15sp"
+        app:layout_constraintHorizontal_weight="0"
+        app:layout_constraintLeft_toRightOf="@id/imgFile"
+        app:layout_constraintTop_toTopOf="@id/imgFile"
+        tools:text="陈志勇会见株式会社大仓饭店董事、 中国区总代表哈曼·达布拉一行.pdf---------------------" />
+
+    <TextView
+        android:id="@+id/textTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:textColor="#FF909191"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="@id/textDesc"
+        app:layout_constraintTop_toBottomOf="@id/textDesc"
+        tools:text="1:27 PM-----------" />
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/textTime"
+        android:background="#EEEEEE"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

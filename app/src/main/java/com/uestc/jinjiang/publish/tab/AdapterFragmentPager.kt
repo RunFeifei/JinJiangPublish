@@ -13,13 +13,14 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
  */
 class AdapterFragmentPager(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
 
-    private val fragments: SparseArray<DemoObjectFragment> = SparseArray()
+    private val fragments: SparseArray<BasicTabFragment> = SparseArray()
 
     init {
-        fragments.put(PAGE_HOME, DemoObjectFragment())
-        fragments.put(PAGE_FIND, DemoObjectFragment())
-        fragments.put(PAGE_INDICATOR, DemoObjectFragment())
-        fragments.put(PAGE_OTHERS, DemoObjectFragment())
+        fragments.put(0, BasicTabFragment())
+        fragments.put(1, BasicTabFragment())
+        fragments.put(2, BasicTabFragment())
+        fragments.put(3, BasicTabFragment())
+        fragments.put(4, BasicTabFragment())
     }
 
     override fun createFragment(position: Int): Fragment {
@@ -30,15 +31,4 @@ class AdapterFragmentPager(fragmentActivity: FragmentActivity) : FragmentStateAd
         return fragments.size()
     }
 
-    companion object {
-
-        const val PAGE_HOME = 0
-
-        const val PAGE_FIND = 1
-
-        const val PAGE_INDICATOR = 2
-
-        const val PAGE_OTHERS = 3
-
-    }
 }
