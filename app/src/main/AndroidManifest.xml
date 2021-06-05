@@ -21,15 +21,15 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
+        android:name=".base.App"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".base.App"
-        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.JinJiangPublish">
+        android:theme="@style/Theme.JinJiangPublish"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTask"
@@ -43,25 +43,36 @@
 
         <activity
             android:name=".TabActivity"
-            android:screenOrientation="landscape"></activity>
+            android:theme="@style/BlackFront_AppTheme"
+            android:screenOrientation="landscape" />
 
-        <activity android:name=".file.TBSDebugWebActivity" />
-        <activity android:name=".file.MainFileActivity" />
-        <activity android:name=".file.pdf.PdfActivity" />
-        <activity android:name=".file.ppt.PptActivity" />
-        <activity android:name=".file.PreviewAttachmentActivity" />
+
+        <activity
+            android:name=".file.TBSDebugWebActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".file.MainFileActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".file.pdf.PdfActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".file.ppt.PptActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".file.PreviewAttachmentActivity"
+            android:screenOrientation="landscape" />
 
         <activity
             android:name=".edit.PublishActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="landscape"
             android:theme="@style/BlackFront_AppTheme"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".edit.ShowArtActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            />
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -72,9 +83,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"></meta-data>
         </provider>
-
-
-
 
 
     </application>

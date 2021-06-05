@@ -19,7 +19,7 @@
 
 
             <LinearLayout
-                android:id="@+id/linear_delete_pic"
+                android:id="@+id/layAddFile"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_60"
                 android:gravity="center"
@@ -29,7 +29,7 @@
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="删除图片"
+                    android:text="新增文件"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_16" />
 
@@ -41,18 +41,17 @@
                 android:background="@color/grey_f2" />
 
             <LinearLayout
-                android:id="@+id/linear_editor"
+                android:id="@+id/layEdit"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_60"
                 android:gravity="center"
-                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="编辑图片"
+                    android:text="手动编辑"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_16" />
 
@@ -63,13 +62,11 @@
                 android:layout_height="1dp"
                 android:background="@color/grey_f2" />
             <LinearLayout
-                android:id="@+id/linear_cancle"
+                android:id="@+id/layCancle"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_60"
                 android:gravity="center"
                 android:orientation="horizontal">
-
-
 
                 <TextView
                     android:layout_marginLeft="@dimen/dp_10"

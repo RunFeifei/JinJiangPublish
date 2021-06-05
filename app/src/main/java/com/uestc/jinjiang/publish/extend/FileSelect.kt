@@ -64,7 +64,7 @@ fun Activity.onPickDoc(): ArrayList<Uri> {
 fun Activity.onPickPhoto(): ArrayList<Uri> {
     val photoPaths = ArrayList<Uri>()
     FilePickerBuilder.instance
-        .setMaxCount(10)
+        .setMaxCount(1)
         .setSelectedFiles(photoPaths)
         .setActivityTheme(R.style.FilePickerTheme)
         .setActivityTitle("请选择图片或视频")

@@ -17,7 +17,6 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
-        startActivity(Intent(this@MainActivity, PublishActivity::class.java))
     }
 
 

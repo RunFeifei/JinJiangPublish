@@ -11,16 +11,17 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
  * @Description TODO
  * @date 2021/5/30
  */
-class AdapterFragmentPager(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
+class AdapterFragmentPager(fragmentActivity: FragmentActivity) :
+    FragmentStateAdapter(fragmentActivity) {
 
-    private val fragments: SparseArray<BasicTabFragment> = SparseArray()
+    private val fragments: SparseArray<Fragment> = SparseArray()
 
     init {
         fragments.put(0, BasicTabFragment())
-        fragments.put(1, BasicTabFragment())
-        fragments.put(2, BasicTabFragment())
-        fragments.put(3, BasicTabFragment())
-        fragments.put(4, BasicTabFragment())
+        fragments.put(1, ProjectTabFragment())
+        fragments.put(2, JobTabFragment())
+        fragments.put(3, MapTabFragment())
+        fragments.put(4, FuncTabFragment())
     }
 
     override fun createFragment(position: Int): Fragment {
