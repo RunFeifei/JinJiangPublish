@@ -10,4 +10,9 @@
         <item name="android:windowFullscreen">true</item>
         <!-- Customize your theme here. -->
     </style>
+
+
+    <style name="FilePickerTheme" parent="LibAppTheme">
+    </style>
+
 </resources>

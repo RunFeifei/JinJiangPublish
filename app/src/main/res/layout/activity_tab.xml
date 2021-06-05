@@ -4,44 +4,140 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#005FC5"
     android:orientation="horizontal"
     tools:context=".TabActivity">
 
     <com.angcyo.tablayout.DslTabLayout
         android:id="@+id/tabLayout"
-        android:layout_width="132dp"
-        android:layout_height="match_parent"
-        app:tab_orientation="VERTICAL"
-        tools:background="@color/black">
+        android:layout_width="99dp"
+        android:layout_height="495dp"
+        android:layout_gravity="center_vertical"
+        android:background="#005FC5"
+        app:tab_orientation="VERTICAL">
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/tab01"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:text="Vue"
-            app:layout_tab_weight="0.25"
-            tools:background="@color/black" />
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_tab_weight="0.2">
 
-        <TextView
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:text="基本信息"
+                android:textColor="#FFFFFFFF"
+                app:layout_tab_weight="0.25" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tab02"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:text="前->端"
-            app:layout_tab_weight="0.25"
-            tools:background="@color/teal_200" />
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_tab_weight="0.2">
 
-        <TextView
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:text="重点项目"
+
+                android:textColor="#FFFFFFFF"
+                app:layout_tab_weight="0.25" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tab03"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="设置"
-            app:layout_tab_weight="0.25"
-            tools:background="@color/black" />
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_tab_weight="0.2">
 
-        <TextView
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+
+                android:text="重点工作"
+                android:textColor="#FFFFFFFF"
+                app:layout_tab_weight="0.25" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tab04"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="其他资源"
-            app:layout_tab_weight="0.25"
-            tools:background="@color/teal_200" />
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_tab_weight="0.2">
 
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:text="街道信息"
+
+                android:textColor="#FFFFFFFF"
+                app:layout_tab_weight="0.25" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tab05"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_tab_weight="0.2">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:text="功能区信息"
+                android:textColor="#FFFFFFFF"
+                app:layout_tab_weight="0.25" />
+
+
+        </LinearLayout>
     </com.angcyo.tablayout.DslTabLayout>
 
 
