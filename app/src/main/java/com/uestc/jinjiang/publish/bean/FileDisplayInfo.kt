@@ -2,6 +2,7 @@ package com.uestc.jinjiang.publish.bean
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import com.uestc.jinjiang.publish.file.FileUtils
 import java.io.File
 import java.io.Serializable
 
@@ -59,8 +60,9 @@ class FileDisplayInfo : Serializable {
             return FileDisplayInfo(filePath, fileType, fileName, fileName)
         }
 
-        fun buildFromHtml(title:String,html: String): FileDisplayInfo {
-            return FileDisplayInfo(html, FileTypeEnum.FILE_TYPE_HTML, title, title)
+        fun buildFromHtml(title: String, html: String): FileDisplayInfo {
+            val html2File = FileUtils.html2File(title, html)
+            return FileDisplayInfo(html2File, FileTypeEnum.FILE_TYPE_HTML, title, title)
         }
     }
 
