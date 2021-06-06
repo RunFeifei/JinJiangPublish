@@ -99,7 +99,6 @@ class BasicTabFragment : Fragment(), ListAdapter.OnItemClickListener {
                 Utils.toPath(it, context)
             }
             var build = FileDisplayInfo.buildFromFilePath(paths[0])
-
         }
 
     }
