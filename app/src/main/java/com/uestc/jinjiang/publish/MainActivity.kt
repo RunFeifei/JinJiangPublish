@@ -22,7 +22,6 @@ class MainActivity : BaseActivity() {
 
     private fun init() {
         binding.item01.setOnClickListener {
-            showToast("11111")
             startActivity(Intent(this, TabActivity::class.java))
         }
         binding.item02.setOnClickListener {

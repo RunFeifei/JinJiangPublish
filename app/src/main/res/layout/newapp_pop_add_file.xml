@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -26,10 +25,32 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_marginLeft="@dimen/dp_10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_10"
                     android:text="新增文件"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_16" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_f2" />
+
+            <LinearLayout
+                android:id="@+id/layAddVideo"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_60"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:text="新增视频"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_16" />
 
@@ -48,19 +69,21 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_marginLeft="@dimen/dp_10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_10"
                     android:text="手动编辑"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_16" />
 
 
             </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/grey_f2" />
+
             <LinearLayout
                 android:id="@+id/layCancle"
                 android:layout_width="match_parent"
@@ -69,9 +92,9 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_marginLeft="@dimen/dp_10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_10"
                     android:text="取消"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_16" />
@@ -79,9 +102,6 @@
 
             </LinearLayout>
         </LinearLayout>
-
-
-
 
 
     </RelativeLayout>
