@@ -47,7 +47,7 @@ fun putFile2Db(type: BizTypeEnum, file: FileDisplayInfo) {
     var array = root[type.code]
     array = if (array == null || array.isEmpty()) ArrayList<FileDisplayInfo>() else array
     array.add(file)
-    root[BizTypeEnum.BIZ_TYPE_BASIC.code] = array
+    root[type.code] = array
     disk2db()
 }
 
