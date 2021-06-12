@@ -31,6 +31,7 @@ import com.uestc.jinjiang.publish.utils.RichUtils;
 import com.uestc.jinjiang.publish.utils.Utils;
 import com.uestc.jinjiang.publish.utils.popup.CommonPopupWindow;
 import com.uestc.jinjiang.publish.view.RichEditor;
+import com.uestc.run.basebase.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ import static com.uestc.jinjiang.publish.extend.FileSelectKt.RC_PHOTO_PICKER_PER
  * Created by leo
  * on 2020/9/18.
  */
-public class PublishActivity extends AppCompatActivity implements View.OnClickListener {
+public class PublishActivity extends BaseActivity implements View.OnClickListener {
     ActivityPublishBinding binding;
 
     private CommonPopupWindow popupWindow; //编辑图片的pop

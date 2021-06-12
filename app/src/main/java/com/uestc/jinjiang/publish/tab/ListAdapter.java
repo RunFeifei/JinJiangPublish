@@ -25,6 +25,7 @@ import java.util.List;
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.RecyclerHolder> {
     private Context mContext;
     private OnItemClickListener clickListener;
+    private View.OnClickListener clickMoreListener;
     private final List<FileDisplayInfo> dataList = new ArrayList<>();
 
     public ListAdapter(RecyclerView recyclerView) {
@@ -69,11 +70,20 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.RecyclerHolder
         FileDisplayInfo fileDisplayInfo = dataList.get(position);
         holder.textDesc.setText(fileDisplayInfo.getFileDesc());
         holder.textTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(fileDisplayInfo.getFileTime()));
+        holder.imgMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clickMoreListener != null) {
+                    clickMoreListener.onClick(holder.imgMore);
+                }
+            }
+        });
         int ic = R.drawable.icon_file_unknown;
         ic = fileDisplayInfo.getFileType().equals(FileTypeEnum.FILE_TYPE_PDF.getCode()) ? R.drawable.ic_pdf : ic;
         ic = fileDisplayInfo.getFileType().equals(FileTypeEnum.FILE_TYPE_PPT.getCode()) ? R.drawable.ic_ppt : ic;
         ic = fileDisplayInfo.getFileType().equals(FileTypeEnum.FILE_TYPE_VIDEO.getCode()) ? R.drawable.ic_video : ic;
         holder.imgFile.setImageResource(ic);
+
     }
 
     @Override
@@ -86,12 +96,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.RecyclerHolder
         TextView textDesc;
         ImageView imgFile;
         TextView textTime;
+        View imgMore;
 
         private RecyclerHolder(View itemView) {
             super(itemView);
             textDesc = (TextView) itemView.findViewById(R.id.textDesc);
             textTime = (TextView) itemView.findViewById(R.id.textTime);
             imgFile = (ImageView) itemView.findViewById(R.id.imgFile);
+            imgMore = itemView.findViewById(R.id.imgMore);
         }
     }
 
@@ -101,6 +113,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.RecyclerHolder
 
     public void setClickListener(OnItemClickListener clickListener) {
         this.clickListener = clickListener;
+    }
+
+    public View.OnClickListener getClickMoreListener() {
+        return clickMoreListener;
+    }
+
+    public void setClickMoreListener(View.OnClickListener clickMoreListener) {
+        this.clickMoreListener = clickMoreListener;
     }
 
     public interface OnItemClickListener {

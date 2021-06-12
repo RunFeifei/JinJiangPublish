@@ -42,8 +42,8 @@ public class ShowArtActivity extends AppCompatActivity {
         String content = intent.getStringExtra("content");
         String title = intent.getStringExtra("title");
         initWebView(content);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(title);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setTitle(title);
     }
 
     public static void start(Context context, FileDisplayInfo fileDisplayInfo) {

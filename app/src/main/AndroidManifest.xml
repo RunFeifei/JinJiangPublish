@@ -49,10 +49,12 @@
 
         <activity
             android:name=".file.TBSDebugWebActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:theme="@style/BlackFront_AppTheme"/>
         <activity
             android:name=".file.PreviewAttachmentActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:theme="@style/BlackFront_AppTheme"/>
 
         <activity
             android:name=".edit.PublishActivity"
@@ -63,7 +65,8 @@
         <activity
             android:name=".edit.ShowArtActivity"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@style/BlackFront_AppTheme"/>
 
         <activity
             android:name="com.tencent.smtt.sdk.VideoActivity"

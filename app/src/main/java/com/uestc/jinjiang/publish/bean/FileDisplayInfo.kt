@@ -56,6 +56,9 @@ class FileDisplayInfo : Serializable {
             if (extension == "pdf") {
                 fileType = FileTypeEnum.FILE_TYPE_PDF
             }
+            if (extension == "mp4") {
+                fileType = FileTypeEnum.FILE_TYPE_VIDEO
+            }
             val fileName = file.name
             return FileDisplayInfo(filePath, fileType.code, fileName, fileName)
         }

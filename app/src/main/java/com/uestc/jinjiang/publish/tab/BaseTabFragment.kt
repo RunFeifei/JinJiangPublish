@@ -39,6 +39,7 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
     lateinit var textTitle: TextView
     lateinit var listAdapter: ListAdapter
     lateinit var popupWindow: CommonPopupWindow
+    lateinit var popupWindowMore: CommonPopupWindow
 
 
     override fun onCreateView(
@@ -58,11 +59,15 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
         }
         initRecyclerView()
         initPop()
+        initMorePop()
     }
 
     private fun initRecyclerView() {
         listAdapter = ListAdapter(listView)
         listAdapter.clickListener = this
+        listAdapter.setClickMoreListener {
+            popupWindowMore?.showLeftView(it)
+        }
         listView.layoutManager =
             LinearLayoutManager(this@BaseTabFragment.context, LinearLayoutManager.VERTICAL, false)
         listView.adapter = listAdapter
@@ -70,39 +75,6 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
         listAdapter.setData(datasList)
     }
 
-    private fun initPop() {
-        val view = LayoutInflater.from(context).inflate(R.layout.newapp_pop_add_file, null)
-        view.findViewById<View>(R.id.layCancle)
-            .setOnClickListener { popupWindow?.dismiss() }
-        view.findViewById<View>(R.id.layAddFile).setOnClickListener {
-            picDoc()
-            popupWindow?.dismiss()
-        }
-
-        view.findViewById<View>(R.id.layAddVideo).setOnClickListener {
-            picImage()
-            popupWindow?.dismiss()
-        }
-
-        view.findViewById<View>(R.id.layEdit).setOnClickListener {
-            this@BaseTabFragment.startActivityForResult(
-                Intent(
-                    this@BaseTabFragment.context,
-                    PublishActivity::class.java
-                ), RC_HTML_PICKER_PERM
-            )
-            popupWindow?.dismiss()
-        }
-        popupWindow = CommonPopupWindow.Builder(context)
-            .setView(view)
-            .setWidthAndHeight(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-            .setOutsideTouchable(true) //在外不可用手指取消
-            .setAnimationStyle(R.style.pop_animation) //设置popWindow的出场动画
-            .create()
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -144,6 +116,59 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
     ) {
         fileDisplayInfo ?: return
         Utils.openFile(activity, fileDisplayInfo)
+    }
+
+    private fun initPop() {
+        val view = LayoutInflater.from(context).inflate(R.layout.newapp_pop_add_file, null)
+        view.findViewById<View>(R.id.layCancle)
+            .setOnClickListener { popupWindow?.dismiss() }
+        view.findViewById<View>(R.id.layAddFile).setOnClickListener {
+            picDoc()
+            popupWindow?.dismiss()
+        }
+
+        view.findViewById<View>(R.id.layAddVideo).setOnClickListener {
+            picImage()
+            popupWindow?.dismiss()
+        }
+
+        view.findViewById<View>(R.id.layEdit).setOnClickListener {
+            this@BaseTabFragment.startActivityForResult(
+                Intent(
+                    this@BaseTabFragment.context,
+                    PublishActivity::class.java
+                ), RC_HTML_PICKER_PERM
+            )
+            popupWindow?.dismiss()
+        }
+        popupWindow = CommonPopupWindow.Builder(context)
+            .setView(view)
+            .setWidthAndHeight(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            .setOutsideTouchable(true) //在外不可用手指取消
+            .setAnimationStyle(R.style.pop_animation) //设置popWindow的出场动画
+            .create()
+    }
+
+    private fun initMorePop() {
+        val view = LayoutInflater.from(context).inflate(R.layout.newapp_more_action, null)
+        view.findViewById<View>(R.id.textRename).setOnClickListener {
+            popupWindowMore?.dismiss()
+        }
+
+        view.findViewById<View>(R.id.textDel).setOnClickListener {
+            popupWindowMore?.dismiss()
+        }
+        popupWindowMore = CommonPopupWindow.Builder(context)
+            .setView(view)
+            .setWidthAndHeight(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            .setOutsideTouchable(true) //在外不可用手指取消
+            .create()
     }
 }
 
