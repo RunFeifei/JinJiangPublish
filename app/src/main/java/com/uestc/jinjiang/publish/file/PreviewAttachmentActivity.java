@@ -18,12 +18,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.tencent.smtt.sdk.TbsReaderView;
+import com.uestc.jinjiang.publish.bean.FileDisplayInfo;
 import com.uestc.jinjiang.publish.databinding.ActivityPreviewAttachmentBinding;
-import com.uestc.jinjiang.publish.file.pdf.PdfAdapter;
+import com.uestc.jinjiang.publish.utils.OnAction;
+import com.uestc.jinjiang.publish.utils.Utils;
 
 import java.io.File;
 
-import static com.uestc.jinjiang.publish.file.pdf.PdfActivity.REQUEST_PERMISSION;
 
 /**
  * 预览P文件
@@ -52,6 +53,12 @@ public class PreviewAttachmentActivity extends AppCompatActivity {
         context.startActivity(starter);
     }
 
+    public static void start(Context context, FileDisplayInfo fileDisplayInfo) {
+        Intent starter = new Intent(context, PreviewAttachmentActivity.class);
+        starter.putExtra("filePath", fileDisplayInfo.getFilePath());
+        context.startActivity(starter);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,16 +69,11 @@ public class PreviewAttachmentActivity extends AppCompatActivity {
     }
 
     private void missionPermission() {
-        if ((ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
-            if ((ActivityCompat.shouldShowRequestPermissionRationale(PreviewAttachmentActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE))) {
-            } else {
-                ActivityCompat.requestPermissions(PreviewAttachmentActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION);
-            }
-        }else {
+        Utils.permission(this, () -> {
             String filePath = getIntent().getStringExtra("filePath");
             mFile = new File(filePath);
             addTbsReaderView();
-        }
+        });
     }
 
 
@@ -121,20 +123,6 @@ public class PreviewAttachmentActivity extends AppCompatActivity {
         boolean result = mTbsReaderView.preOpen(extensionName, false);
         if (result) {
             mTbsReaderView.openFile(bundle);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_PERMISSION) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-
-            } else {
-                Toast.makeText(getApplicationContext(), "Please allow the permission", Toast.LENGTH_LONG).show();
-
-            }
         }
     }
 }

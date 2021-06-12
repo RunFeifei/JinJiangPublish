@@ -3,6 +3,7 @@ package com.uestc.jinjiang.publish.extend
 import android.app.Activity
 import android.content.pm.ActivityInfo
 import android.net.Uri
+import androidx.fragment.app.Fragment
 import com.uestc.jinjiang.publish.R
 import droidninja.filepicker.FilePickerBuilder
 import droidninja.filepicker.FilePickerConst.PERMISSIONS_FILE_PICKER
@@ -27,6 +28,19 @@ fun Activity.picDoc() {
         )
     }
 }
+
+@AfterPermissionGranted(RC_FILE_PICKER_PERM)
+fun Fragment.picDoc() {
+    if (EasyPermissions.hasPermissions(context!!, PERMISSIONS_FILE_PICKER)) {
+        onPickDoc()
+    } else {
+        EasyPermissions.requestPermissions(
+            this, getString(R.string.rationale_doc_picker),
+            RC_FILE_PICKER_PERM, PERMISSIONS_FILE_PICKER
+        )
+    }
+}
+
 
 @AfterPermissionGranted(RC_PHOTO_PICKER_PERM)
 fun Activity.picImage() {
@@ -58,6 +72,24 @@ fun Activity.onPickDoc(): ArrayList<Uri> {
         .pickFile(this)
     return docPaths
 }
+
+fun Fragment.onPickDoc(): ArrayList<Uri> {
+    val docPaths = ArrayList<Uri>()
+    FilePickerBuilder.instance
+        .setMaxCount(1)
+        .setSelectedFiles(docPaths)
+        .setActivityTheme(R.style.FilePickerTheme)
+        .setActivityTitle("请选择文件")
+        .setImageSizeLimit(50)
+        .setVideoSizeLimit(200)
+        .enableDocSupport(true)
+        .enableSelectAll(false)
+        .sortDocumentsBy(SortingTypes.NAME)
+        .withOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+        .pickFile(this)
+    return docPaths
+}
+
 
 fun Activity.onPickPhoto(): ArrayList<Uri> {
     val photoPaths = ArrayList<Uri>()

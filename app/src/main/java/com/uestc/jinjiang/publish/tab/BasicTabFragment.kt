@@ -15,10 +15,12 @@ import com.uestc.jinjiang.publish.R
 import com.uestc.jinjiang.publish.bean.FileDisplayInfo
 import com.uestc.jinjiang.publish.edit.PublishActivity
 import com.uestc.jinjiang.publish.extend.picDoc
+import com.uestc.jinjiang.publish.file.PreviewAttachmentActivity
 import com.uestc.jinjiang.publish.utils.Utils
 import com.uestc.jinjiang.publish.utils.popup.CommonPopupWindow
 import droidninja.filepicker.FilePickerConst.KEY_SELECTED_DOCS
 import droidninja.filepicker.FilePickerConst.REQUEST_CODE_DOC
+import java.io.File
 import java.util.*
 
 
@@ -33,7 +35,6 @@ class BasicTabFragment : Fragment(), ListAdapter.OnItemClickListener {
     lateinit var textTitle: TextView
     lateinit var listAdapter: ListAdapter
     lateinit var popupWindow: CommonPopupWindow
-//    var docPaths = mutableListOf<String>()
 
 
     override fun onCreateView(
@@ -73,7 +74,7 @@ class BasicTabFragment : Fragment(), ListAdapter.OnItemClickListener {
         view.findViewById<View>(R.id.layCancle)
             .setOnClickListener { popupWindow?.dismiss() }
         view.findViewById<View>(R.id.layAddFile).setOnClickListener {
-            activity?.picDoc()
+            var picDoc = picDoc()
             popupWindow?.dismiss()
         }
         view.findViewById<View>(R.id.layEdit).setOnClickListener {
@@ -99,13 +100,11 @@ class BasicTabFragment : Fragment(), ListAdapter.OnItemClickListener {
                 Utils.toPath(it, context)
             }
             var build = FileDisplayInfo.buildFromFilePath(paths[0])
+            PreviewAttachmentActivity.start(activity,build)
         }
 
     }
 
-    private fun onPickFile(filePath: String?) {
-        filePath ?: return
-    }
 
     override fun onItemClickListener(
         view: View?,
@@ -114,7 +113,7 @@ class BasicTabFragment : Fragment(), ListAdapter.OnItemClickListener {
     ) {
         fileDisplayInfo ?: return
         var fileType = fileDisplayInfo.fileType
-
+        PreviewAttachmentActivity.start(activity,fileDisplayInfo)
     }
 }
 

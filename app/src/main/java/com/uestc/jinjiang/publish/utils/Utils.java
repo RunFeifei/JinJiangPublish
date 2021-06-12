@@ -1,5 +1,7 @@
 package com.uestc.jinjiang.publish.utils;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -12,13 +14,28 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 
+import com.uestc.jinjiang.publish.R;
+
 import java.io.ByteArrayOutputStream;
+
+import droidninja.filepicker.FilePickerConst;
+import pub.devrel.easypermissions.EasyPermissions;
+
+import static com.uestc.jinjiang.publish.extend.FileSelectKt.RC_PHOTO_PICKER_PERM;
 
 /**
  * Created by ZQiong on 2018/3/22.
  */
 
 public final class Utils {
+    public static void permission(Activity activity,OnAction onAction) {
+        if (!EasyPermissions.hasPermissions(activity, FilePickerConst.PERMISSIONS_FILE_PICKER, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            EasyPermissions.requestPermissions(activity, activity.getString(R.string.rationale_photo_picker),
+                    RC_PHOTO_PICKER_PERM, FilePickerConst.PERMISSIONS_FILE_PICKER, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            return;
+        }
+        onAction.onAction();
+    }
 
     private Utils() throws InstantiationException {
         throw new InstantiationException("This class is not for instantiation");

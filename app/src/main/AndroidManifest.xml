@@ -51,15 +51,6 @@
             android:name=".file.TBSDebugWebActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".file.MainFileActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".file.pdf.PdfActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".file.ppt.PptActivity"
-            android:screenOrientation="landscape" />
-        <activity
             android:name=".file.PreviewAttachmentActivity"
             android:screenOrientation="landscape" />
 
