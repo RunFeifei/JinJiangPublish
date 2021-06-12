@@ -15,12 +15,15 @@ import com.uestc.jinjiang.publish.R
 import com.uestc.jinjiang.publish.bean.FileDisplayInfo
 import com.uestc.jinjiang.publish.edit.PublishActivity
 import com.uestc.jinjiang.publish.extend.picDoc
+import com.uestc.jinjiang.publish.extend.picImage
 import com.uestc.jinjiang.publish.file.PreviewAttachmentActivity
+import com.uestc.jinjiang.publish.file.VideoPlayActivity
 import com.uestc.jinjiang.publish.utils.Utils
 import com.uestc.jinjiang.publish.utils.popup.CommonPopupWindow
 import droidninja.filepicker.FilePickerConst.KEY_SELECTED_DOCS
+import droidninja.filepicker.FilePickerConst.KEY_SELECTED_MEDIA
 import droidninja.filepicker.FilePickerConst.REQUEST_CODE_DOC
-import java.io.File
+import droidninja.filepicker.FilePickerConst.REQUEST_CODE_PHOTO
 import java.util.*
 
 
@@ -74,9 +77,15 @@ class BasicTabFragment : Fragment(), ListAdapter.OnItemClickListener {
         view.findViewById<View>(R.id.layCancle)
             .setOnClickListener { popupWindow?.dismiss() }
         view.findViewById<View>(R.id.layAddFile).setOnClickListener {
-            var picDoc = picDoc()
+            picDoc()
             popupWindow?.dismiss()
         }
+
+        view.findViewById<View>(R.id.layAddVideo).setOnClickListener {
+            picImage()
+            popupWindow?.dismiss()
+        }
+
         view.findViewById<View>(R.id.layEdit).setOnClickListener {
             startActivity(Intent(this@BasicTabFragment.context, PublishActivity::class.java))
             popupWindow?.dismiss()
@@ -100,7 +109,16 @@ class BasicTabFragment : Fragment(), ListAdapter.OnItemClickListener {
                 Utils.toPath(it, context)
             }
             var build = FileDisplayInfo.buildFromFilePath(paths[0])
-            PreviewAttachmentActivity.start(activity,build)
+            PreviewAttachmentActivity.start(activity, build)
+            return
+        }
+        if (requestCode == REQUEST_CODE_PHOTO && resultCode == Activity.RESULT_OK && data != null) {
+            val dataList = ArrayList<Uri>(data.getParcelableArrayListExtra<Uri>(KEY_SELECTED_MEDIA))
+            var paths = dataList.map {
+                Utils.toPath(it, context)
+            }
+            var build = FileDisplayInfo.buildFromFilePath(paths[0])
+            VideoPlayActivity.start(activity, build!!.filePath)
         }
 
     }
@@ -113,7 +131,7 @@ class BasicTabFragment : Fragment(), ListAdapter.OnItemClickListener {
     ) {
         fileDisplayInfo ?: return
         var fileType = fileDisplayInfo.fileType
-        PreviewAttachmentActivity.start(activity,fileDisplayInfo)
+        PreviewAttachmentActivity.start(activity, fileDisplayInfo)
     }
 }
 

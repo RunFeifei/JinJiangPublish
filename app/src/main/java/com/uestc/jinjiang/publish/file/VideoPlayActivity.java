@@ -1,4 +1,4 @@
-package com.uestc.jinjiang.publish.file.video;
+package com.uestc.jinjiang.publish.file;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,9 +8,10 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.tencent.smtt.sdk.TbsVideo;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.uestc.jinjiang.publish.R;
-import com.uestc.jinjiang.publish.file.X5WebView;
+import com.uestc.jinjiang.publish.bean.FileDisplayInfo;
 
 public class VideoPlayActivity extends AppCompatActivity {
     private String videoUrl;
@@ -31,11 +32,22 @@ public class VideoPlayActivity extends AppCompatActivity {
      * @param context
      * @param videoUrl 视频地址
      */
-    public static void actionStart(Context context, String videoUrl) {
-        Intent intent = new Intent(context, VideoPlayActivity.class);
-        intent.putExtra("videoUrl", videoUrl);
-        context.startActivity(intent);
+    public static void start(Context context, String videoUrl) {
+//        Intent intent = new Intent(context, VideoPlayActivity.class);
+//        intent.putExtra("videoUrl", videoUrl);
+//        context.startActivity(intent);
+        TbsVideo.openVideo(context, videoUrl);
+
     }
+
+
+    public static void start(Context context, FileDisplayInfo fileDisplayInfo) {
+//        Intent intent = new Intent(context, VideoPlayActivity.class);
+//        intent.putExtra("videoUrl", fileDisplayInfo.getFilePath());
+//        context.startActivity(intent);
+        TbsVideo.openVideo(context, fileDisplayInfo.getFilePath());
+    }
+
 
     /**
      * 获取上个页面传过来的数据
@@ -51,6 +63,7 @@ public class VideoPlayActivity extends AppCompatActivity {
 
     /**
      * 使用自定义webview播放视频
+     *
      * @param vedioUrl 视频地址
      */
     private void startPlay(String vedioUrl) {

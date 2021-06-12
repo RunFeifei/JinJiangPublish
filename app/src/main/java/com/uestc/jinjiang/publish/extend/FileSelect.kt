@@ -56,6 +56,21 @@ fun Activity.picImage() {
     }
 }
 
+@AfterPermissionGranted(RC_PHOTO_PICKER_PERM)
+fun Fragment.picImage() {
+    if (EasyPermissions.hasPermissions(context!!, PERMISSIONS_FILE_PICKER)) {
+        onPickPhoto()
+    } else {
+        EasyPermissions.requestPermissions(
+            this,
+            getString(R.string.rationale_photo_picker),
+            RC_PHOTO_PICKER_PERM,
+            PERMISSIONS_FILE_PICKER
+        )
+    }
+}
+
+
 fun Activity.onPickDoc(): ArrayList<Uri> {
     val docPaths = ArrayList<Uri>()
     FilePickerBuilder.instance
@@ -65,7 +80,11 @@ fun Activity.onPickDoc(): ArrayList<Uri> {
         .setActivityTitle("请选择文件")
         .setImageSizeLimit(50)
         .setVideoSizeLimit(200)
-        .enableDocSupport(true)
+        .enableDocSupport(false)
+        .addFileSupport("PPT", arrayOf("ppt", "pptx"), R.drawable.icon_file_ppt)
+        .addFileSupport("PDF", arrayOf("pdf"), R.drawable.icon_file_pdf)
+        .addFileSupport("Excel", arrayOf("xls", "xlsx"), R.drawable.icon_file_xls)
+        .enableDocSupport(false)
         .enableSelectAll(false)
         .sortDocumentsBy(SortingTypes.NAME)
         .withOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
@@ -82,10 +101,13 @@ fun Fragment.onPickDoc(): ArrayList<Uri> {
         .setActivityTitle("请选择文件")
         .setImageSizeLimit(50)
         .setVideoSizeLimit(200)
-        .enableDocSupport(true)
         .enableSelectAll(false)
         .sortDocumentsBy(SortingTypes.NAME)
         .withOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+        .addFileSupport("PPT", arrayOf("ppt", "pptx"), R.drawable.icon_file_ppt)
+        .addFileSupport("PDF", arrayOf("pdf"), R.drawable.icon_file_pdf)
+        .addFileSupport("Excel", arrayOf("xls", "xlsx"), R.drawable.icon_file_xls)
+        .enableDocSupport(false)
         .pickFile(this)
     return docPaths
 }
@@ -98,16 +120,40 @@ fun Activity.onPickPhoto(): ArrayList<Uri> {
         .setSelectedFiles(photoPaths)
         .setActivityTheme(R.style.FilePickerTheme)
         .setActivityTitle("请选择图片或视频")
-        .setImageSizeLimit(50)
-        .setVideoSizeLimit(200)
+        .setImageSizeLimit(10)
+        .setVideoSizeLimit(100)
         .setSpan(SPAN_TYPE.FOLDER_SPAN, 3)
         .setSpan(SPAN_TYPE.DETAIL_SPAN, 4)
-        .enableVideoPicker(true)
         .enableCameraSupport(false)
         .showGifs(false)
         .showFolderView(false)
         .enableSelectAll(false)
-        .enableImagePicker(true)
+        .enableVideoPicker(true)
+        .enableImagePicker(false)
+        .setCameraPlaceholder(R.drawable.custom_camera)
+        .withOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+        .pickPhoto(this)
+    return photoPaths;
+
+}
+
+fun Fragment.onPickPhoto(): ArrayList<Uri> {
+    val photoPaths = ArrayList<Uri>()
+    FilePickerBuilder.instance
+        .setMaxCount(1)
+        .setSelectedFiles(photoPaths)
+        .setActivityTheme(R.style.FilePickerTheme)
+        .setActivityTitle("请选择图片或视频")
+        .setImageSizeLimit(10)
+        .setVideoSizeLimit(100)
+        .setSpan(SPAN_TYPE.FOLDER_SPAN, 3)
+        .setSpan(SPAN_TYPE.DETAIL_SPAN, 4)
+        .enableVideoPicker(true)
+        .enableImagePicker(false)
+        .enableCameraSupport(false)
+        .showGifs(false)
+        .showFolderView(false)
+        .enableSelectAll(false)
         .setCameraPlaceholder(R.drawable.custom_camera)
         .withOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
         .pickPhoto(this)
