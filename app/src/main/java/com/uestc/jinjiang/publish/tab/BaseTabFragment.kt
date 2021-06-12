@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.uestc.jinjiang.publish.R
 import com.uestc.jinjiang.publish.bean.FileDisplayInfo
 import com.uestc.jinjiang.publish.edit.PublishActivity
+import com.uestc.jinjiang.publish.extend.RC_HTML_PICKER_PERM
 import com.uestc.jinjiang.publish.extend.picDoc
 import com.uestc.jinjiang.publish.extend.picImage
 import com.uestc.jinjiang.publish.utils.Utils
@@ -81,7 +82,12 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
         }
 
         view.findViewById<View>(R.id.layEdit).setOnClickListener {
-            startActivity(Intent(this@BaseTabFragment.context, PublishActivity::class.java))
+            this@BaseTabFragment.startActivityForResult(
+                Intent(
+                    this@BaseTabFragment.context,
+                    PublishActivity::class.java
+                ), RC_HTML_PICKER_PERM
+            )
             popupWindow?.dismiss()
         }
         popupWindow = CommonPopupWindow.Builder(context)
@@ -113,6 +119,9 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
             }
             var build = FileDisplayInfo.buildFromFilePath(paths[0])
             onAddFileSelect(build)
+        }
+        if (requestCode == RC_HTML_PICKER_PERM && resultCode == Activity.RESULT_OK && data != null) {
+            onAddFileSelect(data.getSerializableExtra("data") as FileDisplayInfo)
         }
 
     }

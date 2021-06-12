@@ -13,6 +13,7 @@ import com.uestc.jinjiang.publish.R;
 import com.uestc.jinjiang.publish.bean.FileDisplayInfo;
 import com.uestc.jinjiang.publish.bean.FileTypeEnum;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,8 +70,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.RecyclerHolder
     public void onBindViewHolder(RecyclerHolder holder, int position) {
         FileDisplayInfo fileDisplayInfo = dataList.get(position);
         holder.textDesc.setText(fileDisplayInfo.getFileDesc());
-        holder.textTime.setText(fileDisplayInfo.getFileTime() + "");
-        int ic = R.drawable.ic_video;
+        holder.textTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(fileDisplayInfo.getFileTime()));
+        int ic = R.drawable.icon_file_unknown;
         ic = fileDisplayInfo.getFileType().equals(FileTypeEnum.FILE_TYPE_PDF.getCode()) ? R.drawable.ic_pdf : ic;
         ic = fileDisplayInfo.getFileType().equals(FileTypeEnum.FILE_TYPE_PPT.getCode()) ? R.drawable.ic_ppt : ic;
         ic = fileDisplayInfo.getFileType().equals(FileTypeEnum.FILE_TYPE_VIDEO.getCode()) ? R.drawable.ic_video: ic;

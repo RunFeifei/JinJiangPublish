@@ -1,8 +1,8 @@
 package com.uestc.jinjiang.publish.edit;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,9 +19,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-
 import com.uestc.jinjiang.publish.R;
+import com.uestc.jinjiang.publish.bean.FileDisplayInfo;
 import com.uestc.jinjiang.publish.databinding.ActivityShowArtBinding;
+import com.uestc.jinjiang.publish.file.FileUtils;
 import com.uestc.jinjiang.publish.utils.RichUtils;
 
 import java.util.ArrayList;
@@ -37,15 +38,21 @@ public class ShowArtActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_show_art);
-        SharedPreferences sharedPreferences = getSharedPreferences("art", MODE_PRIVATE);
-        String title = sharedPreferences.getString("title", "title");
-        String content = sharedPreferences.getString("content", "");
-
-//        content = "上海专业用户上海专业用户上海专业用户上海专业用户上海专业用户<p></p><p><img src=\"https://greenvalley.oss-cn-shanghai.aliyuncs.com/patient/270f8cbc044b4400bdb098d67b72a859_160_160.png\" style=\"max-width:100%;\"></p>";
+        Intent intent = getIntent();
+        String content = intent.getStringExtra("content");
+        String title = intent.getStringExtra("title");
         initWebView(content);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(title);
+    }
 
+    public static void start(Context context, FileDisplayInfo fileDisplayInfo) {
+        Intent starter = new Intent(context, ShowArtActivity.class);
+        String filePath = fileDisplayInfo.getFilePath();
+        String fileOutputString = FileUtils.getFileOutputString(filePath);
+        starter.putExtra("content", fileOutputString);
+        starter.putExtra("title", fileDisplayInfo.getFileTitle());
+        context.startActivity(starter);
     }
 
 

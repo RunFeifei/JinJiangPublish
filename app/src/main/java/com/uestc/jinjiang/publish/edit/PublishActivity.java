@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.uestc.jinjiang.publish.R;
+import com.uestc.jinjiang.publish.bean.FileDisplayInfo;
 import com.uestc.jinjiang.publish.databinding.ActivityPublishBinding;
 import com.uestc.jinjiang.publish.extend.FileSelectKt;
 import com.uestc.jinjiang.publish.utils.KeyBoardUtils;
@@ -248,15 +249,12 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.txt_publish:
-
-                SharedPreferences sharedPreferences = getSharedPreferences("art", MODE_PRIVATE);
-                SharedPreferences.Editor edit = sharedPreferences.edit();
-                edit.putString("content", binding.richEditor.getHtml());
-                edit.putString("title", binding.editName.getText().toString().trim());
-                edit.commit();
-                Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, ShowArtActivity.class);
-                startActivity(intent);
+                String content = binding.richEditor.getHtml();
+                String title = binding.editName.getText().toString().trim();
+                FileDisplayInfo fileDisplayInfo = FileDisplayInfo.Companion.buildFromHtml(title, content);
+                Intent intent=new Intent();
+                intent.putExtra("data",fileDisplayInfo);
+                setResult(RESULT_OK,intent);
                 finish();
                 break;
 

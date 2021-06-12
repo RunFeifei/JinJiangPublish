@@ -8,6 +8,7 @@ import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.loading.dialog.AndroidLoadingDialog
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import pub.devrel.easypermissions.EasyPermissions.PermissionCallbacks
@@ -16,7 +17,11 @@ import pub.devrel.easypermissions.EasyPermissions.PermissionCallbacks
  * Created by PengFeifei on 2018/10/27.
  */
 
-abstract class BaseActivity : AppCompatActivity(),PermissionCallbacks  {
+abstract class BaseActivity : AppCompatActivity(), PermissionCallbacks {
+
+    val loading: AndroidLoadingDialog by lazy {
+        AndroidLoadingDialog().setOnTouchOutside(false)
+    }
 
 
     fun showToast(message: String) {
@@ -43,12 +48,24 @@ abstract class BaseActivity : AppCompatActivity(),PermissionCallbacks  {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+    }
+
+    fun showLoading() {
+        loading.show(fragmentManager, "AndroidLoadingDialog")
+    }
+
+    fun dissLoading() {
+        loading.dismissAllowingStateLoss()
     }
 }
 

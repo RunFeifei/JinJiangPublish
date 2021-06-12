@@ -14,9 +14,14 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.loading.dialog.AndroidLoadingDialog;
 import com.tencent.smtt.sdk.TbsVideo;
 import com.uestc.jinjiang.publish.R;
 import com.uestc.jinjiang.publish.bean.FileDisplayInfo;
+import com.uestc.jinjiang.publish.bean.FileTypeEnum;
+import com.uestc.jinjiang.publish.edit.ShowArtActivity;
 import com.uestc.jinjiang.publish.file.PreviewAttachmentActivity;
 
 import java.io.ByteArrayOutputStream;
@@ -32,9 +37,20 @@ import static com.uestc.jinjiang.publish.extend.FileSelectKt.RC_PHOTO_PICKER_PER
 
 public final class Utils {
 
+    public static AndroidLoadingDialog loading(AppCompatActivity appCompatActivity) {
+        AndroidLoadingDialog iosLoadingDialog = new AndroidLoadingDialog().setOnTouchOutside(false);
+        iosLoadingDialog.show(appCompatActivity.getFragmentManager(), "AndroidLoadingDialog");
+        iosLoadingDialog.dismissAllowingStateLoss();
+        return iosLoadingDialog;
+    }
+
     public static void openFile(Context context, FileDisplayInfo fileDisplayInfo) {
         if (fileDisplayInfo.getFilePath().endsWith("mp4")) {
             TbsVideo.openVideo(context, fileDisplayInfo.getFilePath());
+            return;
+        }
+        if (fileDisplayInfo.getFileType().equals( FileTypeEnum.FILE_TYPE_HTML.getCode())) {
+            ShowArtActivity.start(context, fileDisplayInfo);
             return;
         }
         PreviewAttachmentActivity.start(context, fileDisplayInfo);
