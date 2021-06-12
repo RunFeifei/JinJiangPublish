@@ -25,17 +25,21 @@ import java.util.List;
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.RecyclerHolder> {
     private Context mContext;
     private OnItemClickListener clickListener;
-    private List<FileDisplayInfo> dataList = new ArrayList<>();
+    private final List<FileDisplayInfo> dataList = new ArrayList<>();
 
     public ListAdapter(RecyclerView recyclerView) {
         this.mContext = recyclerView.getContext();
     }
 
-    public void setData(List<FileDisplayInfo> dataList) {
-        if (this.dataList != null) {
-            addData(dataList);
+    public void addData(FileDisplayInfo data) {
+        if (null == data) {
             return;
         }
+        this.dataList.add(data);
+        notifyDataSetChanged();
+    }
+
+    public void setData(List<FileDisplayInfo> dataList) {
         if (null != dataList) {
             this.dataList.clear();
             this.dataList.addAll(dataList);
@@ -43,12 +47,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.RecyclerHolder
         }
     }
 
-    private void addData(List<FileDisplayInfo> dataList) {
-        if (null != dataList) {
-            this.dataList.addAll(dataList);
-            notifyDataSetChanged();
-        }
-    }
 
     @Override
     public RecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -74,7 +72,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.RecyclerHolder
         int ic = R.drawable.icon_file_unknown;
         ic = fileDisplayInfo.getFileType().equals(FileTypeEnum.FILE_TYPE_PDF.getCode()) ? R.drawable.ic_pdf : ic;
         ic = fileDisplayInfo.getFileType().equals(FileTypeEnum.FILE_TYPE_PPT.getCode()) ? R.drawable.ic_ppt : ic;
-        ic = fileDisplayInfo.getFileType().equals(FileTypeEnum.FILE_TYPE_VIDEO.getCode()) ? R.drawable.ic_video: ic;
+        ic = fileDisplayInfo.getFileType().equals(FileTypeEnum.FILE_TYPE_VIDEO.getCode()) ? R.drawable.ic_video : ic;
         holder.imgFile.setImageResource(ic);
     }
 

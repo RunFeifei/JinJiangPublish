@@ -1,5 +1,6 @@
 package com.uestc.jinjiang.publish.tab
 
+import com.uestc.jinjiang.publish.bean.BizTypeEnum
 import com.uestc.jinjiang.publish.bean.FileDisplayInfo
 import com.uestc.jinjiang.publish.utils.putBasic2Db
 
@@ -13,12 +14,12 @@ class BasicTabFragment : BaseTabFragment() {
 
     override fun onAddFileSelect(file: FileDisplayInfo?) {
         file ?: return
-        putBasic2Db(file)
         refreshListView(file)
+        putBasic2Db(file)
     }
 
-    override fun title(): String {
-        return "基本信息"
+    override fun bizType(): BizTypeEnum {
+        return BizTypeEnum.BIZ_TYPE_BASIC
     }
 }
 

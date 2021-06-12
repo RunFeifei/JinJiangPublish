@@ -26,9 +26,10 @@ class TabActivity : BaseActivity() {
         ViewPager2Delegate.install(binding.viewPager2, binding.tabLayout)
         binding.tabLayout.orientation = LinearLayout.VERTICAL
         binding.viewPager2.adapter = AdapterFragmentPager(this)
-        binding.viewPager2.offscreenPageLimit = 3
+        binding.viewPager2.offscreenPageLimit = 4
         binding.viewPager2.isUserInputEnabled = false
         binding.viewPager2.orientation = ViewPager2.ORIENTATION_VERTICAL
+        binding.viewPager2.currentItem = intent.getIntExtra("index", 0)
     }
 
 

@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.uestc.jinjiang.publish.R
+import com.uestc.jinjiang.publish.bean.BizTypeEnum
 import com.uestc.jinjiang.publish.bean.FileDisplayInfo
 import com.uestc.jinjiang.publish.edit.PublishActivity
 import com.uestc.jinjiang.publish.extend.RC_HTML_PICKER_PERM
@@ -19,6 +20,7 @@ import com.uestc.jinjiang.publish.extend.picDoc
 import com.uestc.jinjiang.publish.extend.picImage
 import com.uestc.jinjiang.publish.utils.Utils
 import com.uestc.jinjiang.publish.utils.popup.CommonPopupWindow
+import com.uestc.jinjiang.publish.utils.root
 import droidninja.filepicker.FilePickerConst.KEY_SELECTED_DOCS
 import droidninja.filepicker.FilePickerConst.KEY_SELECTED_MEDIA
 import droidninja.filepicker.FilePickerConst.REQUEST_CODE_DOC
@@ -37,7 +39,6 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
     lateinit var textTitle: TextView
     lateinit var listAdapter: ListAdapter
     lateinit var popupWindow: CommonPopupWindow
-    val listDatas = mutableListOf<FileDisplayInfo>()
 
 
     override fun onCreateView(
@@ -50,7 +51,7 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         textTitle = view.findViewById(R.id.textTitle) as TextView
-        textTitle.text = title()
+        textTitle.text = bizType().desc
         listView = view.findViewById(R.id.listView) as RecyclerView
         (view.findViewById(R.id.imgAdd) as View).setOnClickListener {
             popupWindow?.showBottom(view, 0.5f)
@@ -65,6 +66,8 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
         listView.layoutManager =
             LinearLayoutManager(this@BaseTabFragment.context, LinearLayoutManager.VERTICAL, false)
         listView.adapter = listAdapter
+        var datasList = root[bizType().code]
+        listAdapter.setData(datasList)
     }
 
     private fun initPop() {
@@ -127,11 +130,10 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
     }
 
     abstract fun onAddFileSelect(file: FileDisplayInfo?)
-    abstract fun title(): String
+    abstract fun bizType(): BizTypeEnum
 
     protected fun refreshListView(file: FileDisplayInfo) {
-        listDatas.add(file)
-        listAdapter.setData(listDatas)
+        listAdapter.addData(file)
     }
 
 

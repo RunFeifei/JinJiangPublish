@@ -1,5 +1,6 @@
 package com.uestc.jinjiang.publish.tab
 
+import com.uestc.jinjiang.publish.bean.BizTypeEnum
 import com.uestc.jinjiang.publish.bean.FileDisplayInfo
 import com.uestc.jinjiang.publish.utils.putBasic2Db
 import com.uestc.jinjiang.publish.utils.putProject2Db
@@ -18,7 +19,7 @@ class ProjectTabFragment : BaseTabFragment() {
         refreshListView(file)
     }
 
-    override fun title(): String {
-        return "重点项目"
+    override fun bizType(): BizTypeEnum {
+        return BizTypeEnum.BIZ_TYPE_PROJECT
     }
 }

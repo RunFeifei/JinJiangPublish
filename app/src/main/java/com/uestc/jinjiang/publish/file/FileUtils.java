@@ -38,12 +38,6 @@ public class FileUtils {
      * @return 文档目录地址
      */
     public static String createExternalDocumentsPath() {
-
-        Type type = new TypeToken<HashMap<String, ArrayList<FileDisplayInfo>>>(){}.getType();
-
-
-
-
         File file = new File(createAppPath(), Environment.DIRECTORY_DOCUMENTS);
         if (!file.exists()) {
             file.mkdirs();
@@ -55,6 +49,9 @@ public class FileUtils {
         List<String> lists = new ArrayList<>();
         try {
             File file = new File(fileName);
+            if (!file.exists()) {
+                return "";
+            }
             InputStream instream = new FileInputStream(file);
             if (instream != null) {
                 InputStreamReader inputreader

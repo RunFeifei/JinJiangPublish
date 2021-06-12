@@ -1,5 +1,6 @@
 package com.uestc.jinjiang.publish.tab
 
+import com.uestc.jinjiang.publish.bean.BizTypeEnum
 import com.uestc.jinjiang.publish.bean.FileDisplayInfo
 import com.uestc.jinjiang.publish.utils.putBasic2Db
 import com.uestc.jinjiang.publish.utils.putJob2Db
@@ -18,8 +19,8 @@ class JobTabFragment : BaseTabFragment() {
         refreshListView(file)
     }
 
-    override fun title(): String {
-        return "重点工作"
+    override fun bizType(): BizTypeEnum {
+        return BizTypeEnum.BIZ_TYPE_JOB
     }
 }
 

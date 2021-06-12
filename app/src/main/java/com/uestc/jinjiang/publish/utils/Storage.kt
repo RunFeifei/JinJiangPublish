@@ -48,6 +48,7 @@ fun putFile2Db(type: BizTypeEnum, file: FileDisplayInfo) {
     array = if (array == null || array.isEmpty()) ArrayList<FileDisplayInfo>() else array
     array.add(file)
     root[BizTypeEnum.BIZ_TYPE_BASIC.code] = array
+    disk2db()
 }
 
 
@@ -62,8 +63,11 @@ fun disk2db() {
     FileUtils.saveStr(getDbPath(), toJson)
 }
 
-fun db2Disk(): HashMap<String, ArrayList<FileDisplayInfo>> {
+fun db2Disk(): HashMap<String, ArrayList<FileDisplayInfo>>? {
     val loadFile = FileUtils.loadFile(getDbPath())
+    if (loadFile.isEmpty()) {
+        return null
+    }
     root = GSON.fromJson(loadFile, TYPE)
     return root
 }
