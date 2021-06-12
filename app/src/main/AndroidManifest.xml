@@ -55,10 +55,6 @@
             android:screenOrientation="landscape" />
 
         <activity
-            android:name=".file.VideoPlayActivity"
-            android:screenOrientation="landscape" />
-
-        <activity
             android:name=".edit.PublishActivity"
             android:screenOrientation="landscape"
             android:theme="@style/BlackFront_AppTheme"

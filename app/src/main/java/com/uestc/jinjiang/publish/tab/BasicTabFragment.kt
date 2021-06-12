@@ -17,7 +17,6 @@ import com.uestc.jinjiang.publish.edit.PublishActivity
 import com.uestc.jinjiang.publish.extend.picDoc
 import com.uestc.jinjiang.publish.extend.picImage
 import com.uestc.jinjiang.publish.file.PreviewAttachmentActivity
-import com.uestc.jinjiang.publish.file.VideoPlayActivity
 import com.uestc.jinjiang.publish.utils.Utils
 import com.uestc.jinjiang.publish.utils.popup.CommonPopupWindow
 import droidninja.filepicker.FilePickerConst.KEY_SELECTED_DOCS
@@ -109,7 +108,7 @@ class BasicTabFragment : Fragment(), ListAdapter.OnItemClickListener {
                 Utils.toPath(it, context)
             }
             var build = FileDisplayInfo.buildFromFilePath(paths[0])
-            PreviewAttachmentActivity.start(activity, build)
+            Utils.openFile(activity, build)
             return
         }
         if (requestCode == REQUEST_CODE_PHOTO && resultCode == Activity.RESULT_OK && data != null) {
@@ -118,7 +117,7 @@ class BasicTabFragment : Fragment(), ListAdapter.OnItemClickListener {
                 Utils.toPath(it, context)
             }
             var build = FileDisplayInfo.buildFromFilePath(paths[0])
-            VideoPlayActivity.start(activity, build!!.filePath)
+            Utils.openFile(activity, build)
         }
 
     }

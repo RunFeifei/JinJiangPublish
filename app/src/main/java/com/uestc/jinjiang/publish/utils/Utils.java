@@ -14,7 +14,10 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 
+import com.tencent.smtt.sdk.TbsVideo;
 import com.uestc.jinjiang.publish.R;
+import com.uestc.jinjiang.publish.bean.FileDisplayInfo;
+import com.uestc.jinjiang.publish.file.PreviewAttachmentActivity;
 
 import java.io.ByteArrayOutputStream;
 
@@ -28,7 +31,17 @@ import static com.uestc.jinjiang.publish.extend.FileSelectKt.RC_PHOTO_PICKER_PER
  */
 
 public final class Utils {
-    public static void permission(Activity activity,OnAction onAction) {
+
+    public static void openFile(Context context, FileDisplayInfo fileDisplayInfo) {
+        if (fileDisplayInfo.getFilePath().endsWith("mp4")) {
+            TbsVideo.openVideo(context, fileDisplayInfo.getFilePath());
+            return;
+        }
+        PreviewAttachmentActivity.start(context, fileDisplayInfo);
+    }
+
+
+    public static void permission(Activity activity, OnAction onAction) {
         if (!EasyPermissions.hasPermissions(activity, FilePickerConst.PERMISSIONS_FILE_PICKER, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             EasyPermissions.requestPermissions(activity, activity.getString(R.string.rationale_photo_picker),
                     RC_PHOTO_PICKER_PERM, FilePickerConst.PERMISSIONS_FILE_PICKER, Manifest.permission.WRITE_EXTERNAL_STORAGE);
