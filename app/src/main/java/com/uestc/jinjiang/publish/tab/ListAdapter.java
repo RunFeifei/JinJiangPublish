@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.uestc.jinjiang.publish.R;
 import com.uestc.jinjiang.publish.bean.FileDisplayInfo;
+import com.uestc.jinjiang.publish.bean.FileTypeEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.RecyclerHolder
     }
 
     public void setData(List<FileDisplayInfo> dataList) {
+        if (this.dataList != null) {
+            addData(dataList);
+            return;
+        }
         if (null != dataList) {
             this.dataList.clear();
             this.dataList.addAll(dataList);
@@ -37,7 +42,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.RecyclerHolder
         }
     }
 
-    public void addData(List<FileDisplayInfo> dataList) {
+    private void addData(List<FileDisplayInfo> dataList) {
         if (null != dataList) {
             this.dataList.addAll(dataList);
             notifyDataSetChanged();
@@ -62,8 +67,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.RecyclerHolder
 
     @Override
     public void onBindViewHolder(RecyclerHolder holder, int position) {
-        holder.textDesc.setText(dataList.get(position).getFileDesc());
-        holder.textTime.setText(dataList.get(position).getFileTime() + "");
+        FileDisplayInfo fileDisplayInfo = dataList.get(position);
+        holder.textDesc.setText(fileDisplayInfo.getFileDesc());
+        holder.textTime.setText(fileDisplayInfo.getFileTime() + "");
+        int ic = R.drawable.ic_video;
+        ic = fileDisplayInfo.getFileType().equals(FileTypeEnum.FILE_TYPE_PDF.getCode()) ? R.drawable.ic_pdf : ic;
+        ic = fileDisplayInfo.getFileType().equals(FileTypeEnum.FILE_TYPE_PPT.getCode()) ? R.drawable.ic_ppt : ic;
+        ic = fileDisplayInfo.getFileType().equals(FileTypeEnum.FILE_TYPE_VIDEO.getCode()) ? R.drawable.ic_video: ic;
+        holder.imgFile.setImageResource(ic);
     }
 
     @Override

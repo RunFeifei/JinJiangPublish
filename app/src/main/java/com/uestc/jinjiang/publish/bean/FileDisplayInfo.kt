@@ -20,14 +20,14 @@ class FileDisplayInfo : Serializable {
      * 在htmlCase时:是html文本--最好改成html文件存到本地的地址!!!
      */
     var filePath: String = ""
-    var fileType: FileTypeEnum = FileTypeEnum.FILE_TYPE_OTHER
+    var fileType: String = FileTypeEnum.FILE_TYPE_OTHER.code
     var fileDesc: String = ""
     var fileTitle: String = ""
     var fileTime: Long = System.currentTimeMillis()
 
     constructor(
         filePath: String,
-        fileType: FileTypeEnum,
+        fileType: String,
         fileDesc: String,
         fileTitle: String
     ) {
@@ -57,12 +57,12 @@ class FileDisplayInfo : Serializable {
                 fileType = FileTypeEnum.FILE_TYPE_PDF
             }
             val fileName = file.name
-            return FileDisplayInfo(filePath, fileType, fileName, fileName)
+            return FileDisplayInfo(filePath, fileType.code, fileName, fileName)
         }
 
         fun buildFromHtml(title: String, html: String): FileDisplayInfo {
             val html2File = FileUtils.html2File(title, html)
-            return FileDisplayInfo(html2File, FileTypeEnum.FILE_TYPE_HTML, title, title)
+            return FileDisplayInfo(html2File, FileTypeEnum.FILE_TYPE_HTML.code, title, title)
         }
     }
 

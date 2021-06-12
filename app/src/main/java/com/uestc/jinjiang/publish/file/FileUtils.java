@@ -5,6 +5,9 @@ import android.content.res.AssetManager;
 import android.os.Environment;
 import android.util.Log;
 
+import com.google.gson.reflect.TypeToken;
+import com.uestc.jinjiang.publish.bean.FileDisplayInfo;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -15,9 +18,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.nio.channels.FileChannel;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * 常用操作文件工具类
@@ -32,12 +38,45 @@ public class FileUtils {
      * @return 文档目录地址
      */
     public static String createExternalDocumentsPath() {
+
+        Type type = new TypeToken<HashMap<String, ArrayList<FileDisplayInfo>>>(){}.getType();
+
+
+
+
         File file = new File(createAppPath(), Environment.DIRECTORY_DOCUMENTS);
         if (!file.exists()) {
             file.mkdirs();
         }
         return file.getPath();
     }
+
+    public static String loadFile(String fileName) {
+        List<String> lists = new ArrayList<>();
+        try {
+            File file = new File(fileName);
+            InputStream instream = new FileInputStream(file);
+            if (instream != null) {
+                InputStreamReader inputreader
+                        = new InputStreamReader(instream, "GBK");
+                BufferedReader buffreader = new BufferedReader(inputreader);
+                String line = "";
+                while ((line = buffreader.readLine()) != null) {
+                    lists.add(line);
+                }
+                instream.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(TAG, "****Load " + fileName + " Error****");
+        }
+        String content = "";
+        for (String list : lists) {
+            content = content.concat(list);
+        }
+        return content;
+    }
+
 
     /**
      * 创建根缓存图片地址
@@ -431,6 +470,18 @@ public class FileUtils {
             fout.write(bytes);
             fout.close();
         } catch (Exception e) {
+            Log.e(TAG, "Exception：", e);
+        }
+    }
+
+    public static void saveStr(String filePath, String content) {
+        try {
+            FileOutputStream fout = new FileOutputStream(filePath);
+            byte[] bytes = content.getBytes();
+            fout.write(bytes);
+            fout.close();
+        } catch (Exception e) {
+            e.printStackTrace();
             Log.e(TAG, "Exception：", e);
         }
     }
