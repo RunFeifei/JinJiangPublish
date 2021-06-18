@@ -44,9 +44,9 @@ fun Fragment.picDoc() {
 
 
 @AfterPermissionGranted(RC_PHOTO_PICKER_PERM)
-fun Activity.picImage() {
+fun Activity.picImage(onlyPic: Boolean = false) {
     if (EasyPermissions.hasPermissions(this, PERMISSIONS_FILE_PICKER)) {
-        onPickPhoto()
+        onPickPhoto(onlyPic)
     } else {
         EasyPermissions.requestPermissions(
             this,
@@ -58,9 +58,9 @@ fun Activity.picImage() {
 }
 
 @AfterPermissionGranted(RC_PHOTO_PICKER_PERM)
-fun Fragment.picImage() {
+fun Fragment.picImage(onlyPic: Boolean = false) {
     if (EasyPermissions.hasPermissions(context!!, PERMISSIONS_FILE_PICKER)) {
-        onPickPhoto()
+        onPickPhoto(onlyPic)
     } else {
         EasyPermissions.requestPermissions(
             this,
@@ -112,7 +112,7 @@ fun Fragment.onPickDoc(): ArrayList<Uri> {
 }
 
 
-fun Activity.onPickPhoto(): ArrayList<Uri> {
+fun Activity.onPickPhoto(onlyPic: Boolean = false): ArrayList<Uri> {
     val photoPaths = ArrayList<Uri>()
     FilePickerBuilder.instance
         .setMaxCount(1)
@@ -127,8 +127,8 @@ fun Activity.onPickPhoto(): ArrayList<Uri> {
         .showGifs(false)
         .showFolderView(false)
         .enableSelectAll(false)
-        .enableVideoPicker(true)
-        .enableImagePicker(false)
+        .enableVideoPicker(!onlyPic)
+        .enableImagePicker(onlyPic)
         .setCameraPlaceholder(R.drawable.custom_camera)
         .withOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
         .pickPhoto(this)
@@ -136,7 +136,7 @@ fun Activity.onPickPhoto(): ArrayList<Uri> {
 
 }
 
-fun Fragment.onPickPhoto(): ArrayList<Uri> {
+fun Fragment.onPickPhoto(onlyPic: Boolean = false): ArrayList<Uri> {
     val photoPaths = ArrayList<Uri>()
     FilePickerBuilder.instance
         .setMaxCount(1)
@@ -147,8 +147,8 @@ fun Fragment.onPickPhoto(): ArrayList<Uri> {
         .setVideoSizeLimit(100)
         .setSpan(SPAN_TYPE.FOLDER_SPAN, 3)
         .setSpan(SPAN_TYPE.DETAIL_SPAN, 4)
-        .enableVideoPicker(true)
-        .enableImagePicker(false)
+        .enableVideoPicker(!onlyPic)
+        .enableImagePicker(onlyPic)
         .enableCameraSupport(false)
         .showGifs(false)
         .showFolderView(false)

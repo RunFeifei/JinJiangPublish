@@ -1,6 +1,5 @@
 package com.uestc.jinjiang.publish.edit;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,7 +18,6 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.uestc.jinjiang.publish.R;
@@ -37,9 +35,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import droidninja.filepicker.FilePickerConst;
-import pub.devrel.easypermissions.EasyPermissions;
-
-import static com.uestc.jinjiang.publish.extend.FileSelectKt.RC_PHOTO_PICKER_PERM;
 
 /**
  * Created by leo
@@ -52,7 +47,6 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
     private String currentUrl = "";
 
     private int isFrom;//0:表示正常编辑  1:表示是重新编辑
-    private ArrayList<Uri> photoPaths;
 
 
     @Override
@@ -253,9 +247,9 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
                 String content = binding.richEditor.getHtml();
                 String title = binding.editName.getText().toString().trim();
                 FileDisplayInfo fileDisplayInfo = FileDisplayInfo.Companion.buildFromHtml(title, content);
-                Intent intent=new Intent();
-                intent.putExtra("data",fileDisplayInfo);
-                setResult(RESULT_OK,intent);
+                Intent intent = new Intent();
+                intent.putExtra("data", fileDisplayInfo);
+                setResult(RESULT_OK, intent);
                 finish();
                 break;
 
@@ -300,17 +294,8 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
                         Toast.makeText(PublishActivity.this, "最多添加9张照片~", Toast.LENGTH_SHORT).show();
                         return;
                     }
-
                 }
-
-                if (EasyPermissions.hasPermissions(this, FilePickerConst.PERMISSIONS_FILE_PICKER, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    photoPaths = FileSelectKt.onPickPhoto(PublishActivity.this);
-                    KeyBoardUtils.closeKeybord(binding.editName, PublishActivity.this);
-                } else {
-                    EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo_picker),
-                            RC_PHOTO_PICKER_PERM, FilePickerConst.PERMISSIONS_FILE_PICKER, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                }
-
+                FileSelectKt.picImage(PublishActivity.this,true);
                 break;
 
 
@@ -328,15 +313,11 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == FilePickerConst.REQUEST_CODE_PHOTO && resultCode == Activity.RESULT_OK && data != null) {
-
             ArrayList<Uri> dataList = data.getParcelableArrayListExtra(FilePickerConst.KEY_SELECTED_MEDIA);
             if (dataList != null) {
-                photoPaths = new ArrayList<Uri>();
-                photoPaths.addAll(dataList);
                 againEdit();
-                String s = Utils.toPath(photoPaths.get(0), this);
+                String s = Utils.toPath(dataList.get(0), this);
                 binding.richEditor.insertImage(s, "dachshund");
-
                 KeyBoardUtils.openKeybord(binding.editName, PublishActivity.this);
                 binding.richEditor.postDelayed(new Runnable() {
                     @Override
