@@ -30,6 +30,7 @@ class TabActivity : BaseActivity() {
         binding.viewPager2.isUserInputEnabled = false
         binding.viewPager2.orientation = ViewPager2.ORIENTATION_VERTICAL
         binding.viewPager2.currentItem = intent.getIntExtra("index", 0)
+        binding.icHome.setOnClickListener { finish() }
     }
 
 

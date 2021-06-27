@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F9F7F7">
+    android:background="#F7F7F7">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layTitle"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="60dp"
         android:background="#FFFFFF"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="基本信息"
+            android:text="街道信息"
             android:textColor="#FF4D4D4D"
             android:textSize="21sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -35,7 +35,7 @@
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/black"
+        android:background="#F7F7F7"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layTitle"

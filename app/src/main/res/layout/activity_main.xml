@@ -101,7 +101,7 @@
             android:layout_height="107dp"
             android:layout_gravity="center"
             android:layout_marginTop="24dp"
-            android:src="@drawable/ic_home_focus_project" />
+            android:src="@drawable/ic_home_pro" />
 
         <ImageView
             android:layout_width="107dp"
@@ -137,7 +137,7 @@
             android:layout_height="107dp"
             android:layout_gravity="center"
             android:layout_marginTop="24dp"
-            android:src="@drawable/ic_home_focus_job" />
+            android:src="@drawable/ic_home_job" />
 
         <ImageView
             android:layout_width="107dp"
@@ -173,7 +173,7 @@
             android:layout_height="107dp"
             android:layout_gravity="center"
             android:layout_marginTop="24dp"
-            android:src="@drawable/ic_home_map" />
+            android:src="@drawable/ic_home_street" />
 
         <ImageView
             android:layout_width="107dp"
