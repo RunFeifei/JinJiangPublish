@@ -98,8 +98,15 @@ public class RichEditor extends WebView {
         setVerticalScrollBarEnabled(false);
         setHorizontalScrollBarEnabled(false);
         getSettings().setJavaScriptEnabled(true);
+        //允许webview对文件的操作
+        getSettings().setAllowUniversalAccessFromFileURLs(true);
+        getSettings().setAllowFileAccess(true);
+        getSettings().setAllowFileAccessFromFileURLs(true);
         setWebChromeClient(new WebChromeClient());
         setWebViewClient(createWebviewClient());
+
+
+
         loadUrl(SETUP_HTML);
 
         applyAttributes(context, attrs);

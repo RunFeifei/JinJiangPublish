@@ -1,10 +1,10 @@
 package com.uestc.jinjiang.publish.edit;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
@@ -23,7 +23,6 @@ import androidx.databinding.DataBindingUtil;
 import com.uestc.jinjiang.publish.R;
 import com.uestc.jinjiang.publish.bean.FileDisplayInfo;
 import com.uestc.jinjiang.publish.databinding.ActivityPublishBinding;
-import com.uestc.jinjiang.publish.extend.FileSelectKt;
 import com.uestc.jinjiang.publish.utils.KeyBoardUtils;
 import com.uestc.jinjiang.publish.utils.RichUtils;
 import com.uestc.jinjiang.publish.utils.Utils;
@@ -35,6 +34,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import droidninja.filepicker.FilePickerConst;
+import pub.devrel.easypermissions.EasyPermissions;
+
+import static com.uestc.jinjiang.publish.extend.FileSelectKt.RC_FILE_PICKER_PERM;
 
 /**
  * Created by leo
@@ -239,11 +241,12 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.txt_finish:
+            case R.id.txt_finish: {
                 finish();
                 break;
+            }
 
-            case R.id.txt_publish:
+            case R.id.txt_publish: {
                 String content = binding.richEditor.getHtml();
                 String title = binding.editName.getText().toString().trim();
                 FileDisplayInfo fileDisplayInfo = FileDisplayInfo.Companion.buildFromHtml(title, content);
@@ -252,42 +255,49 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
+            }
 
-            case R.id.button_rich_do:
+            case R.id.button_rich_do: {
                 //反撤销
                 binding.richEditor.redo();
                 break;
-            case R.id.button_rich_undo:
+            }
+            case R.id.button_rich_undo: {
                 //撤销
                 binding.richEditor.undo();
                 break;
+            }
 
-            case R.id.button_bold:
+            case R.id.button_bold: {
                 //加粗
                 againEdit();
                 binding.richEditor.setBold();
                 break;
+            }
 
-            case R.id.button_underline:
+            case R.id.button_underline: {
                 //加下划线
                 againEdit();
                 binding.richEditor.setUnderline();
                 break;
+            }
 
-            case R.id.button_list_ul:
+            case R.id.button_list_ul: {
                 //加带点的序列号
                 againEdit();
                 binding.richEditor.setBullets();
                 break;
+            }
 
-            case R.id.button_list_ol:
+            case R.id.button_list_ol: {
                 //加带数字的序列号
                 againEdit();
                 binding.richEditor.setNumbers();
                 break;
+            }
 
 
-            case R.id.button_image:
+            case R.id.button_image: {
                 if (!TextUtils.isEmpty(binding.richEditor.getHtml())) {
                     ArrayList<String> arrayList = RichUtils.returnImageUrlsFromHtml(binding.richEditor.getHtml());
                     if (arrayList != null && arrayList.size() >= 9) {
@@ -295,10 +305,15 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
                         return;
                     }
                 }
-                FileSelectKt.picImage(PublishActivity.this,true);
+                if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    intent.setType("image/*");
+                    startActivityForResult(intent, FilePickerConst.REQUEST_CODE_PHOTO);
+                } else {
+                    EasyPermissions.requestPermissions(this, getString(R.string.rationale_doc_picker), RC_FILE_PICKER_PERM, Manifest.permission.READ_EXTERNAL_STORAGE);
+                }
                 break;
-
-
+            }
         }
     }
 
@@ -312,22 +327,19 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == FilePickerConst.REQUEST_CODE_PHOTO && resultCode == Activity.RESULT_OK && data != null) {
-            ArrayList<Uri> dataList = data.getParcelableArrayListExtra(FilePickerConst.KEY_SELECTED_MEDIA);
-            if (dataList != null) {
-                againEdit();
-                String s = Utils.toPath(dataList.get(0), this);
-                binding.richEditor.insertImage(s, "dachshund");
-                KeyBoardUtils.openKeybord(binding.editName, PublishActivity.this);
-                binding.richEditor.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (binding.richEditor != null) {
-                            binding.richEditor.scrollToBottom();
-                        }
+        if (requestCode == FilePickerConst.REQUEST_CODE_PHOTO && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+            againEdit();
+            String s = Utils.toPath(data.getData(), this);
+            binding.richEditor.insertImage(s, "dachshund");
+            KeyBoardUtils.openKeybord(binding.editName, PublishActivity.this);
+            binding.richEditor.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (binding.richEditor != null) {
+                        binding.richEditor.scrollToBottom();
                     }
-                }, 200);
-            }
+                }
+            }, 200);
         }
     }
 }
