@@ -33,16 +33,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
         android:text="锦江区基础情况数据"
-        android:textColor="#ffffffff"
+        android:textColor="#FCCE9B"
         android:textSize="48sp"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/item01"
-        android:layout_width="219dp"
-        android:layout_height="399dp"
+        android:layout_width="147dp"
+        android:layout_height="267dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/shape_home_item"
         android:gravity="center_horizontal"
@@ -54,22 +55,22 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="30dp"
             android:text="基本信息"
             android:textColor="#ff333333"
-            android:textSize="27dp" />
+            android:textSize="17dp" />
 
         <ImageView
-            android:layout_width="162dp"
-            android:layout_height="162dp"
+            android:layout_width="107dp"
+            android:layout_height="107dp"
             android:layout_gravity="center"
             android:layout_marginTop="24dp"
             android:src="@drawable/ic_home_basic" />
 
         <ImageView
-            android:layout_width="159dp"
-            android:layout_height="81dp"
-            android:layout_marginTop="27dp"
+            android:layout_width="107dp"
+            android:layout_height="53dp"
+            android:layout_marginTop="17dp"
             android:src="@drawable/ic_home_btn" />
 
 
@@ -77,8 +78,8 @@
 
     <LinearLayout
         android:id="@+id/item02"
-        android:layout_width="219dp"
-        android:layout_height="399dp"
+        android:layout_width="147dp"
+        android:layout_height="267dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/shape_home_item"
         android:gravity="center_horizontal"
@@ -90,22 +91,22 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="30dp"
             android:text="重点项目"
             android:textColor="#ff333333"
-            android:textSize="27dp" />
+            android:textSize="17dp" />
 
         <ImageView
-            android:layout_width="162dp"
-            android:layout_height="162dp"
+            android:layout_width="107dp"
+            android:layout_height="107dp"
             android:layout_gravity="center"
             android:layout_marginTop="24dp"
             android:src="@drawable/ic_home_focus_project" />
 
         <ImageView
-            android:layout_width="159dp"
-            android:layout_height="81dp"
-            android:layout_marginTop="27dp"
+            android:layout_width="107dp"
+            android:layout_height="53dp"
+            android:layout_marginTop="17dp"
             android:src="@drawable/ic_home_btn" />
 
 
@@ -113,8 +114,8 @@
 
     <LinearLayout
         android:id="@+id/item03"
-        android:layout_width="219dp"
-        android:layout_height="399dp"
+        android:layout_width="147dp"
+        android:layout_height="267dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/shape_home_item"
         android:gravity="center_horizontal"
@@ -126,22 +127,22 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="30dp"
             android:text="重点工作"
             android:textColor="#ff333333"
-            android:textSize="27dp" />
+            android:textSize="17dp" />
 
         <ImageView
-            android:layout_width="162dp"
-            android:layout_height="162dp"
+            android:layout_width="107dp"
+            android:layout_height="107dp"
             android:layout_gravity="center"
             android:layout_marginTop="24dp"
             android:src="@drawable/ic_home_focus_job" />
 
         <ImageView
-            android:layout_width="159dp"
-            android:layout_height="81dp"
-            android:layout_marginTop="27dp"
+            android:layout_width="107dp"
+            android:layout_height="53dp"
+            android:layout_marginTop="17dp"
             android:src="@drawable/ic_home_btn" />
 
 
@@ -149,8 +150,8 @@
 
     <LinearLayout
         android:id="@+id/item04"
-        android:layout_width="219dp"
-        android:layout_height="399dp"
+        android:layout_width="147dp"
+        android:layout_height="267dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/shape_home_item"
         android:gravity="center_horizontal"
@@ -162,22 +163,22 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="30dp"
             android:text="街道信息"
             android:textColor="#ff333333"
-            android:textSize="27dp" />
+            android:textSize="17dp" />
 
         <ImageView
-            android:layout_width="162dp"
-            android:layout_height="162dp"
+            android:layout_width="107dp"
+            android:layout_height="107dp"
             android:layout_gravity="center"
             android:layout_marginTop="24dp"
             android:src="@drawable/ic_home_map" />
 
         <ImageView
-            android:layout_width="159dp"
-            android:layout_height="81dp"
-            android:layout_marginTop="27dp"
+            android:layout_width="107dp"
+            android:layout_height="53dp"
+            android:layout_marginTop="17dp"
             android:src="@drawable/ic_home_btn" />
 
 
@@ -185,8 +186,8 @@
 
     <LinearLayout
         android:id="@+id/item05"
-        android:layout_width="219dp"
-        android:layout_height="399dp"
+        android:layout_width="147dp"
+        android:layout_height="267dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/shape_home_item"
         android:gravity="center_horizontal"
@@ -199,22 +200,22 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="30dp"
             android:text="功能区信息"
             android:textColor="#ff333333"
-            android:textSize="27dp" />
+            android:textSize="17dp" />
 
         <ImageView
-            android:layout_width="162dp"
-            android:layout_height="162dp"
+            android:layout_width="107dp"
+            android:layout_height="107dp"
             android:layout_gravity="center"
             android:layout_marginTop="24dp"
             android:src="@drawable/ic_home_func" />
 
         <ImageView
-            android:layout_width="159dp"
-            android:layout_height="81dp"
-            android:layout_marginTop="27dp"
+            android:layout_width="107dp"
+            android:layout_height="53dp"
+            android:layout_marginTop="17dp"
             android:src="@drawable/ic_home_btn" />
 
 
