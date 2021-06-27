@@ -2,14 +2,13 @@ package com.uestc.jinjiang.publish.tab
 
 import android.Manifest
 import android.app.Activity
-import android.content.ContentResolver
 import android.content.Intent
-import android.database.Cursor
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -104,6 +103,10 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
         }
         if (requestCode == REQUEST_CODE_PHOTO && resultCode == Activity.RESULT_OK && data != null) {
             var path = Utils.getFileAbsolutePath(activity!!, data.data)
+            if (!path.endsWith("mp4")) {
+                Toast.makeText(activity!!, "不支持此视频类型", Toast.LENGTH_SHORT).show()
+                return
+            }
             var build = FileDisplayInfo.buildFromFilePath(path)
             if (EasyPermissions.hasPermissions(
                     activity!!,
