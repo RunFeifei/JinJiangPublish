@@ -1,8 +1,9 @@
 package com.uestc.jinjiang.publish.tab
 
 import android.app.Activity
+import android.content.ContentResolver
 import android.content.Intent
-import android.net.Uri
+import android.database.Cursor
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,13 +17,9 @@ import com.uestc.jinjiang.publish.bean.BizTypeEnum
 import com.uestc.jinjiang.publish.bean.FileDisplayInfo
 import com.uestc.jinjiang.publish.edit.PublishActivity
 import com.uestc.jinjiang.publish.extend.RC_HTML_PICKER_PERM
-import com.uestc.jinjiang.publish.extend.picDoc
-import com.uestc.jinjiang.publish.extend.picImage
 import com.uestc.jinjiang.publish.utils.Utils
 import com.uestc.jinjiang.publish.utils.popup.CommonPopupWindow
 import com.uestc.jinjiang.publish.utils.root
-import droidninja.filepicker.FilePickerConst.KEY_SELECTED_DOCS
-import droidninja.filepicker.FilePickerConst.KEY_SELECTED_MEDIA
 import droidninja.filepicker.FilePickerConst.REQUEST_CODE_DOC
 import droidninja.filepicker.FilePickerConst.REQUEST_CODE_PHOTO
 import java.util.*
@@ -78,21 +75,26 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_DOC && resultCode == Activity.RESULT_OK && data != null) {
-            val dataList = ArrayList<Uri>(data.getParcelableArrayListExtra<Uri>(KEY_SELECTED_DOCS))
-            var paths = dataList.map {
-                Utils.toPath(it, context)
-            }
-            var build = FileDisplayInfo.buildFromFilePath(paths[0])
+        if (requestCode == REQUEST_CODE_DOC && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
+            val path = Utils.getFileAbsolutePath(activity!!, data.data)
+            var build = FileDisplayInfo.buildFromFilePath(path)
             onAddFileSelect(build)
             return
         }
         if (requestCode == REQUEST_CODE_PHOTO && resultCode == Activity.RESULT_OK && data != null) {
-            val dataList = ArrayList<Uri>(data.getParcelableArrayListExtra<Uri>(KEY_SELECTED_MEDIA))
-            var paths = dataList.map {
-                Utils.toPath(it, context)
+            var path = "";
+            val resolver: ContentResolver = activity!!.contentResolver
+            val cursor: Cursor? = resolver.query(data.data!!, null, null, null, null)
+            if (cursor == null) {
+                // 未查询到，说明为普通文件，可直接通过URI获取文件路径 path = data.data!!.path
+                path.toString()
+                return
             }
-            var build = FileDisplayInfo.buildFromFilePath(paths[0])
+            if (cursor.moveToFirst()) {
+                path = cursor.getString(cursor.getColumnIndex("_data"))
+            }
+            cursor.close()
+            var build = FileDisplayInfo.buildFromFilePath(path)
             onAddFileSelect(build)
         }
         if (requestCode == RC_HTML_PICKER_PERM && resultCode == Activity.RESULT_OK && data != null) {
@@ -123,12 +125,20 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
         view.findViewById<View>(R.id.layCancle)
             .setOnClickListener { popupWindow?.dismiss() }
         view.findViewById<View>(R.id.layAddFile).setOnClickListener {
-            picDoc()
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = "*/*";
+            val supportedMimeTypes = arrayOf("application/pdf", "application/msword")
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, supportedMimeTypes);
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            startActivityForResult(intent, REQUEST_CODE_DOC)
             popupWindow?.dismiss()
         }
 
         view.findViewById<View>(R.id.layAddVideo).setOnClickListener {
-            picImage()
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = "video/*";
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            startActivityForResult(intent, REQUEST_CODE_PHOTO)
             popupWindow?.dismiss()
         }
 
