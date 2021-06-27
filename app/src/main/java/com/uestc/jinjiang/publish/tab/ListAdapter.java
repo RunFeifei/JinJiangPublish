@@ -81,6 +81,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.RecyclerHolder
         int ic = R.drawable.icon_file_unknown;
         ic = fileDisplayInfo.getFileType().equals(FileTypeEnum.FILE_TYPE_PDF.getCode()) ? R.drawable.ic_pdf : ic;
         ic = fileDisplayInfo.getFileType().equals(FileTypeEnum.FILE_TYPE_PPT.getCode()) ? R.drawable.ic_ppt : ic;
+        ic = fileDisplayInfo.getFileType().equals(FileTypeEnum.FILE_TYPE_DOC.getCode()) ? R.drawable.ic_doc : ic;
         ic = fileDisplayInfo.getFileType().equals(FileTypeEnum.FILE_TYPE_VIDEO.getCode()) ? R.drawable.ic_video : ic;
         holder.imgFile.setImageResource(ic);
 

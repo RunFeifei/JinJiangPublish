@@ -12,5 +12,6 @@ enum class FileTypeEnum(var key: Int, var code: String) {
     FILE_TYPE_HTML(2, "FILE_TYPE_HTML"),
     FILE_TYPE_OTHER(3, "FILE_TYPE_OTHER"),
     FILE_TYPE_VIDEO(4, "FILE_TYPE_VIDEO"),
+    FILE_TYPE_DOC(5, "FILE_TYPE_DOC"),
     ;
 }
