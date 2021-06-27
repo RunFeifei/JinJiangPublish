@@ -53,6 +53,7 @@
         android:layout_height="39dp"
         android:layout_marginLeft="15dp"
         android:src="@color/black"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

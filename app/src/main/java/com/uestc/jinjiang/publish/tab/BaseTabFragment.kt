@@ -1,5 +1,6 @@
 package com.uestc.jinjiang.publish.tab
 
+import android.Manifest
 import android.app.Activity
 import android.content.ContentResolver
 import android.content.Intent
@@ -16,12 +17,14 @@ import com.uestc.jinjiang.publish.R
 import com.uestc.jinjiang.publish.bean.BizTypeEnum
 import com.uestc.jinjiang.publish.bean.FileDisplayInfo
 import com.uestc.jinjiang.publish.edit.PublishActivity
+import com.uestc.jinjiang.publish.extend.RC_FILE_PICKER_PERM
 import com.uestc.jinjiang.publish.extend.RC_HTML_PICKER_PERM
 import com.uestc.jinjiang.publish.utils.Utils
 import com.uestc.jinjiang.publish.utils.popup.CommonPopupWindow
 import com.uestc.jinjiang.publish.utils.root
 import droidninja.filepicker.FilePickerConst.REQUEST_CODE_DOC
 import droidninja.filepicker.FilePickerConst.REQUEST_CODE_PHOTO
+import pub.devrel.easypermissions.EasyPermissions
 import java.util.*
 
 
@@ -78,27 +81,66 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
         if (requestCode == REQUEST_CODE_DOC && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
             val path = Utils.getFileAbsolutePath(activity!!, data.data)
             var build = FileDisplayInfo.buildFromFilePath(path)
-            onAddFileSelect(build)
+
+
+            if (EasyPermissions.hasPermissions(
+                    activity!!,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+            ) {
+                onAddFileSelect(build)
+            } else {
+                EasyPermissions.requestPermissions(
+                    this,
+                    getString(R.string.rationale_doc_picker),
+                    RC_FILE_PICKER_PERM,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+            }
+
             return
         }
         if (requestCode == REQUEST_CODE_PHOTO && resultCode == Activity.RESULT_OK && data != null) {
-            var path = "";
-            val resolver: ContentResolver = activity!!.contentResolver
-            val cursor: Cursor? = resolver.query(data.data!!, null, null, null, null)
-            if (cursor == null) {
-                // 未查询到，说明为普通文件，可直接通过URI获取文件路径 path = data.data!!.path
-                path.toString()
-                return
-            }
-            if (cursor.moveToFirst()) {
-                path = cursor.getString(cursor.getColumnIndex("_data"))
-            }
-            cursor.close()
+            var path = Utils.getFileAbsolutePath(activity!!, data.data)
             var build = FileDisplayInfo.buildFromFilePath(path)
-            onAddFileSelect(build)
+            if (EasyPermissions.hasPermissions(
+                    activity!!,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+            ) {
+                onAddFileSelect(build)
+            } else {
+                EasyPermissions.requestPermissions(
+                    this,
+                    getString(R.string.rationale_doc_picker),
+                    RC_FILE_PICKER_PERM,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+
+                )
+            }
         }
         if (requestCode == RC_HTML_PICKER_PERM && resultCode == Activity.RESULT_OK && data != null) {
-            onAddFileSelect(data.getSerializableExtra("data") as FileDisplayInfo)
+            if (EasyPermissions.hasPermissions(
+                    activity!!,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+            ) {
+                onAddFileSelect(data.getSerializableExtra("data") as FileDisplayInfo)
+            } else {
+                EasyPermissions.requestPermissions(
+                    this,
+                    getString(R.string.rationale_doc_picker),
+                    RC_FILE_PICKER_PERM,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+
+                )
+            }
         }
 
     }
