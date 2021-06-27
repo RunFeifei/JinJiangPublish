@@ -18,6 +18,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.lang.reflect.Type;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
@@ -474,10 +476,13 @@ public class FileUtils {
 
     public static void saveStr(String filePath, String content) {
         try {
-            FileOutputStream fout = new FileOutputStream(filePath);
-            byte[] bytes = content.getBytes();
-            fout.write(bytes);
-            fout.close();
+            Writer out = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(filePath), StandardCharsets.UTF_8));
+            try {
+                out.write(content);
+            } finally {
+                out.close();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(TAG, "Exception：", e);
