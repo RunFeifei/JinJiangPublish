@@ -42,6 +42,7 @@ class MapTabFragment : BaseTabFragment(), OnFolderLongClick {
             MapCategoryList(it.key, it.value)
         } as java.util.ArrayList
         mapDisk2db()
+        adapter?.setExpandableParentItemList(rootDBForMap)
     }
 
     override fun bizType(): BizTypeEnum {
@@ -65,8 +66,8 @@ class MapTabFragment : BaseTabFragment(), OnFolderLongClick {
 
         })
         listView.adapter = adapter
-        adapter.setExpandableParentItemList(rootDBForMap)
-        adapter?.clickListener=this
+        adapter.addExpandableParentItemList(rootDBForMap)
+        adapter?.clickListener = this
         adapter.parentLongClick = this
     }
 
@@ -83,7 +84,7 @@ class MapTabFragment : BaseTabFragment(), OnFolderLongClick {
             rootDBForMap.add(newFolder)
             var arrayList = ArrayList<MapCategoryList>()
             arrayList.add(newFolder)
-            adapter.setExpandableParentItemList(arrayList)
+            adapter.addExpandableParentItemList(arrayList)
         }
     }
 

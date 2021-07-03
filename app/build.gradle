@@ -109,5 +109,5 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.7'
     implementation 'com.github.ydstar:loadingdialog:1.0.0'
-    implementation 'com.github.as1k:ExpandableRecyclerView:0.1.1'
+    implementation project(':ExpandableRecyclerView')
 }
