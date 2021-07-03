@@ -2,6 +2,7 @@ package com.uestc.jinjiang.publish.utils;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -18,8 +19,14 @@ import android.os.FileUtils;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -61,7 +68,7 @@ public final class Utils {
             TbsVideo.openVideo(context, fileDisplayInfo.getFilePath());
             return;
         }
-        if (fileDisplayInfo.getFileType().equals( FileTypeEnum.FILE_TYPE_HTML.getCode())) {
+        if (fileDisplayInfo.getFileType().equals(FileTypeEnum.FILE_TYPE_HTML.getCode())) {
             ShowArtActivity.start(context, fileDisplayInfo);
             return;
         }
@@ -182,10 +189,9 @@ public final class Utils {
                 return getDataColumn(context, contentUri, selection, selectionArgs);
             }
         } // MediaStore (and general)
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
-            return uriToFileApiQ(context,imageUri);
-        }
-        else if ("content".equalsIgnoreCase(imageUri.getScheme())) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            return uriToFileApiQ(context, imageUri);
+        } else if ("content".equalsIgnoreCase(imageUri.getScheme())) {
             // Return the remote address
             if (isGooglePhotosUri(imageUri)) {
                 return imageUri.getLastPathSegment();
@@ -282,6 +288,7 @@ public final class Utils {
 
     /**
      * Android 10 以上适配 另一种写法
+     *
      * @param context
      * @param uri
      * @return
@@ -310,6 +317,7 @@ public final class Utils {
 
     /**
      * Android 10 以上适配
+     *
      * @param context
      * @param uri
      * @return
@@ -342,8 +350,60 @@ public final class Utils {
         return file.getAbsolutePath();
     }
 
+    public static void dialog(Activity context, String title, String positive, OnSearchListener positiveClick) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        final AlertDialog dialog = builder.create();
+        View dialogView = View.inflate(context, R.layout.dialog_edit, null);
+        dialog.setView(dialogView);
+        dialog.show();
+        EditText etPwd = (EditText) dialogView.findViewById(R.id.textEdit);
+        TextView textTitle = (TextView) dialogView.findViewById(R.id.textTitle);
+        textTitle.setText(title);
+        TextView btnPositive = (TextView) dialogView.findViewById(R.id.btnPositive);
+        btnPositive.setText(positive);
+        TextView btnCancel = (TextView) dialogView.findViewById(R.id.btnNegative);
+        btnPositive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String pwd = etPwd.getText() == null ? null : etPwd.getText().toString();
+                if (TextUtils.isEmpty(pwd) && TextUtils.isEmpty(pwd)) {
+                    Toast.makeText(context, "输入内容为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (positiveClick != null) {
+                    positiveClick.onSearch(pwd);
+                }
+                dialog.dismiss();
+            }
+        });
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
+        android.view.WindowManager.LayoutParams p = dialog.getWindow().getAttributes();  //获取对话框当前的参数值
+        p.height = dp2px(context, 200);
+        p.width = dp2px(context, 500);
+        dialog.getWindow().setAttributes(p);
+    }
 
+    public static int px2dp(Context context, float pxValue) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, pxValue, context.getResources().getDisplayMetrics());
+    }
 
+    public static int px2sp(Context context, float pxValue) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, pxValue, context.getResources().getDisplayMetrics());
+    }
+
+    public static int dp2px(Context context, float dpValue) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
+    public static int sp2px(Context context, float spValue) {
+        float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue * fontScale + 0.5f);
+    }
+
+    public interface OnSearchListener {
+        void onSearch(String v);
+    }
 
 
 }

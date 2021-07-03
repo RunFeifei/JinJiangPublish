@@ -52,6 +52,15 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         textTitle = view.findViewById(R.id.textTitle) as TextView
         textTitle.text = bizType().desc
+        (view.findViewById(R.id.imgSearch) as View).setOnClickListener {
+            Utils.dialog(activity, "搜索", "确认") { key ->
+                val datasList = root[bizType().code]
+                val filterList = datasList?.filter { file ->
+                    file.fileDesc.contains(key)
+                }
+                listAdapter.setData(filterList)
+            }
+        }
         listView = view.findViewById(R.id.listView) as RecyclerView
         (view.findViewById(R.id.imgAdd) as View).setOnClickListener {
             popupWindow?.showBottom(view, 0.5f)
@@ -72,6 +81,12 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
         listView.adapter = listAdapter
         var datasList = root[bizType().code]
         listAdapter.setData(datasList)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        var datasList = root[bizType().code]
+        listAdapter?.setData(datasList)
     }
 
 
@@ -225,6 +240,8 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
             .setOutsideTouchable(true) //在外不可用手指取消
             .create()
     }
+
+
 }
 
 
