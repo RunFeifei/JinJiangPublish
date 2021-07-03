@@ -11,7 +11,7 @@ class CategoryViewHolder(itemView:View) : ParentViewHolder(itemView) {
     private lateinit var animation: RotateAnimation
 
     fun bind(mapCategoryList: MapCategoryList){
-        itemView.findViewById<TextView>(R.id.tv_category).text = mapCategoryList.name
+        itemView.findViewById<TextView>(R.id.tv_category).text = mapCategoryList.folderName
     }
 
     override fun onExpansionToggled(expanded: Boolean) {

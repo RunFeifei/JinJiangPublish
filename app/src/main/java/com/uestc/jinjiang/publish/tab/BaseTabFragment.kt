@@ -189,8 +189,7 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
 
     private fun initPop() {
         val view = LayoutInflater.from(context).inflate(R.layout.newapp_pop_add_file, null)
-        view.findViewById<View>(R.id.layCancle)
-            .setOnClickListener { popupWindowAddFile?.dismiss() }
+        view.findViewById<View>(R.id.layCancle).setOnClickListener { popupWindowAddFile?.dismiss() }
         view.findViewById<View>(R.id.layAddFile).setOnClickListener {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "*/*";

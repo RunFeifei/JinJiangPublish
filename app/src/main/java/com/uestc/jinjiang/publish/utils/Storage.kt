@@ -22,8 +22,7 @@ import kotlin.collections.set
  * <业务type,文件列表>
  */
 var rootDB = HashMap<String, ArrayList<FileDisplayInfo>>()
-val TYPE: Type =
-    object : TypeToken<java.util.HashMap<String?, ArrayList<FileDisplayInfo?>?>?>() {}.type
+
 val GSON = Gson()
 
 fun putBasic2Db(file: FileDisplayInfo) {
@@ -43,7 +42,6 @@ fun putFunc2Db(file: FileDisplayInfo) {
 }
 
 
-
 fun putFile2Db(type: BizTypeEnum, file: FileDisplayInfo) {
     var array = rootDB[type.code]
     array = if (array == null || array.isEmpty()) ArrayList<FileDisplayInfo>() else array
@@ -53,9 +51,9 @@ fun putFile2Db(type: BizTypeEnum, file: FileDisplayInfo) {
 }
 
 
-fun getDbPath(): String {
+fun getDbPath(isMap: Boolean = false): String {
     val absolutePath = FileUtils.createAppPath().absolutePath
-    return absolutePath + File.separator + "appdata.json"
+    return absolutePath + File.separator +if(!isMap) "appdata.json" else "appMapData.json"
 }
 
 
@@ -69,10 +67,24 @@ fun db2Disk(): HashMap<String, ArrayList<FileDisplayInfo>>? {
     if (loadFile.isEmpty()) {
         return null
     }
-    rootDB = GSON.fromJson(loadFile, TYPE)
+    rootDB = GSON.fromJson(loadFile, object : TypeToken<java.util.HashMap<String?, ArrayList<FileDisplayInfo?>?>?>() {}.type)
     return rootDB
 }
 
 var rootDBForMap = ArrayList<MapCategoryList>()
+
+fun mapDisk2db() {
+    val toJson = GSON.toJson(rootDBForMap)
+    FileUtils.saveStr(getDbPath(true), toJson)
+}
+
+fun mapDb2Disk():  ArrayList<MapCategoryList>? {
+    val loadFile = FileUtils.loadFile(getDbPath(true))
+    if (loadFile.isEmpty()) {
+        return null
+    }
+    rootDBForMap = GSON.fromJson(loadFile, object : TypeToken<ArrayList<MapCategoryList>>() {}.type)
+    return rootDBForMap
+}
 
 

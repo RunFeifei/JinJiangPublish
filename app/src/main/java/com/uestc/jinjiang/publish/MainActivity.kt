@@ -3,8 +3,8 @@ package com.uestc.jinjiang.publish
 import android.content.Intent
 import android.os.Bundle
 import com.uestc.jinjiang.publish.databinding.ActivityMainBinding
-import com.uestc.jinjiang.publish.utils.Utils
 import com.uestc.jinjiang.publish.utils.db2Disk
+import com.uestc.jinjiang.publish.utils.mapDb2Disk
 import com.uestc.run.basebase.BaseActivity
 
 
@@ -18,7 +18,7 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
-        restoreDb()
+//        restoreDb()
     }
 
 
@@ -55,7 +55,9 @@ class MainActivity : BaseActivity() {
     private fun restoreDb() {
         showLoading()
         var db2Disk = db2Disk()
+        var mapDb2Disk = mapDb2Disk()
         db2Disk?.toString()
+        mapDb2Disk?.toString()
         dissLoading()
     }
 
