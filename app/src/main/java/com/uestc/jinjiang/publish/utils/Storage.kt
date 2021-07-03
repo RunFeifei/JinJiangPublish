@@ -13,10 +13,14 @@ import kotlin.collections.set
 
 /**
  * @author PengFeifei
- * @Description TODO
+ * @Description 数据大本营
  * @date 2021/6/5
  */
-var root = HashMap<String, ArrayList<FileDisplayInfo>>()
+
+/**
+ * <业务type,文件列表>
+ */
+var rootDB = HashMap<String, ArrayList<FileDisplayInfo>>()
 val TYPE: Type =
     object : TypeToken<java.util.HashMap<String?, ArrayList<FileDisplayInfo?>?>?>() {}.type
 val GSON = Gson()
@@ -44,10 +48,10 @@ fun putFunc2Db(file: FileDisplayInfo) {
 
 
 fun putFile2Db(type: BizTypeEnum, file: FileDisplayInfo) {
-    var array = root[type.code]
+    var array = rootDB[type.code]
     array = if (array == null || array.isEmpty()) ArrayList<FileDisplayInfo>() else array
     array.add(file)
-    root[type.code] = array
+    rootDB[type.code] = array
     disk2db()
 }
 
@@ -59,7 +63,7 @@ fun getDbPath(): String {
 
 
 fun disk2db() {
-    val toJson = GSON.toJson(root)
+    val toJson = GSON.toJson(rootDB)
     FileUtils.saveStr(getDbPath(), toJson)
 }
 
@@ -68,7 +72,7 @@ fun db2Disk(): HashMap<String, ArrayList<FileDisplayInfo>>? {
     if (loadFile.isEmpty()) {
         return null
     }
-    root = GSON.fromJson(loadFile, TYPE)
-    return root
+    rootDB = GSON.fromJson(loadFile, TYPE)
+    return rootDB
 }
 

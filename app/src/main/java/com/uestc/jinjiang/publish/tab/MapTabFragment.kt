@@ -2,6 +2,7 @@ package com.uestc.jinjiang.publish.tab
 
 import com.uestc.jinjiang.publish.bean.BizTypeEnum
 import com.uestc.jinjiang.publish.bean.FileDisplayInfo
+import com.uestc.jinjiang.publish.utils.Utils
 import com.uestc.jinjiang.publish.utils.putBasic2Db
 import com.uestc.jinjiang.publish.utils.putMap2Db
 
@@ -21,6 +22,20 @@ class MapTabFragment : BaseTabFragment() {
 
     override fun bizType(): BizTypeEnum {
         return BizTypeEnum.BIZ_TYPE_MAP
+    }
+
+    override fun isMapFragment(): Boolean {
+        return true
+    }
+
+    override fun initRecyclerView() {
+
+    }
+
+    override fun onClickAddFileFolder() {
+        Utils.dialog(activity,"添加文件夹","确认"){
+
+        }
     }
 }
 

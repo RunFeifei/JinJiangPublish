@@ -20,7 +20,7 @@ import com.uestc.jinjiang.publish.extend.RC_FILE_PICKER_PERM
 import com.uestc.jinjiang.publish.extend.RC_HTML_PICKER_PERM
 import com.uestc.jinjiang.publish.utils.Utils
 import com.uestc.jinjiang.publish.utils.popup.CommonPopupWindow
-import com.uestc.jinjiang.publish.utils.root
+import com.uestc.jinjiang.publish.utils.rootDB
 import droidninja.filepicker.FilePickerConst.REQUEST_CODE_DOC
 import droidninja.filepicker.FilePickerConst.REQUEST_CODE_PHOTO
 import pub.devrel.easypermissions.EasyPermissions
@@ -36,9 +36,8 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
 
     lateinit var listView: RecyclerView
     lateinit var textTitle: TextView
-    lateinit var listAdapter: ListAdapter
-    lateinit var popupWindow: CommonPopupWindow
-    lateinit var popupWindowMore: CommonPopupWindow
+    var listAdapter: ListAdapter?=null
+    lateinit var popupWindowAddFile: CommonPopupWindow
 
 
     override fun onCreateView(
@@ -52,41 +51,50 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         textTitle = view.findViewById(R.id.textTitle) as TextView
         textTitle.text = bizType().desc
+        (view.findViewById(R.id.imgSearch) as View).visibility =
+            if (isMapFragment()) View.INVISIBLE else View.VISIBLE
         (view.findViewById(R.id.imgSearch) as View).setOnClickListener {
             Utils.dialog(activity, "搜索", "确认") { key ->
-                val datasList = root[bizType().code]
+                val datasList = rootDB[bizType().code]
                 val filterList = datasList?.filter { file ->
                     file.fileDesc.contains(key)
                 }
-                listAdapter.setData(filterList)
+                listAdapter?.setData(filterList)
             }
         }
         listView = view.findViewById(R.id.listView) as RecyclerView
         (view.findViewById(R.id.imgAdd) as View).setOnClickListener {
-            popupWindow?.showBottom(view, 0.5f)
+            if (isMapFragment()) {
+
+                return@setOnClickListener
+            }
+            popupWindowAddFile?.showBottom(view, 0.5f)
         }
         initRecyclerView()
         initPop()
-        initMorePop()
     }
 
-    private fun initRecyclerView() {
+    protected  open fun initRecyclerView() {
         listAdapter = ListAdapter(listView)
-        listAdapter.clickListener = this
-        listAdapter.setClickMoreListener {
-            popupWindowMore?.showLeftView(it)
-        }
+        listAdapter?.clickListener = this
         listView.layoutManager =
             LinearLayoutManager(this@BaseTabFragment.context, LinearLayoutManager.VERTICAL, false)
         listView.adapter = listAdapter
-        var datasList = root[bizType().code]
-        listAdapter.setData(datasList)
+        var datasList = rootDB[bizType().code]
+        listAdapter?.setData(datasList)
     }
 
     override fun onResume() {
         super.onResume()
-        var datasList = root[bizType().code]
+        var datasList = rootDB[bizType().code]
         listAdapter?.setData(datasList)
+    }
+
+    protected open fun isMapFragment(): Boolean {
+        return false
+    }
+
+    protected open fun onClickAddFileFolder() {
     }
 
 
@@ -113,7 +121,6 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
                     Manifest.permission.WRITE_EXTERNAL_STORAGE
                 )
             }
-
             return
         }
         if (requestCode == REQUEST_CODE_PHOTO && resultCode == Activity.RESULT_OK && data != null) {
@@ -167,7 +174,7 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
     abstract fun bizType(): BizTypeEnum
 
     protected fun refreshListView(file: FileDisplayInfo) {
-        listAdapter.addData(file)
+        listAdapter?.addData(file)
     }
 
 
@@ -183,7 +190,7 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
     private fun initPop() {
         val view = LayoutInflater.from(context).inflate(R.layout.newapp_pop_add_file, null)
         view.findViewById<View>(R.id.layCancle)
-            .setOnClickListener { popupWindow?.dismiss() }
+            .setOnClickListener { popupWindowAddFile?.dismiss() }
         view.findViewById<View>(R.id.layAddFile).setOnClickListener {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "*/*";
@@ -191,7 +198,7 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
             intent.putExtra(Intent.EXTRA_MIME_TYPES, supportedMimeTypes);
             intent.addCategory(Intent.CATEGORY_OPENABLE)
             startActivityForResult(intent, REQUEST_CODE_DOC)
-            popupWindow?.dismiss()
+            popupWindowAddFile?.dismiss()
         }
 
         view.findViewById<View>(R.id.layAddVideo).setOnClickListener {
@@ -199,7 +206,7 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
             intent.type = "video/*";
             intent.addCategory(Intent.CATEGORY_OPENABLE)
             startActivityForResult(intent, REQUEST_CODE_PHOTO)
-            popupWindow?.dismiss()
+            popupWindowAddFile?.dismiss()
         }
 
         view.findViewById<View>(R.id.layEdit).setOnClickListener {
@@ -209,9 +216,9 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
                     PublishActivity::class.java
                 ), RC_HTML_PICKER_PERM
             )
-            popupWindow?.dismiss()
+            popupWindowAddFile?.dismiss()
         }
-        popupWindow = CommonPopupWindow.Builder(context)
+        popupWindowAddFile = CommonPopupWindow.Builder(context)
             .setView(view)
             .setWidthAndHeight(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -221,26 +228,6 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
             .setAnimationStyle(R.style.pop_animation) //设置popWindow的出场动画
             .create()
     }
-
-    private fun initMorePop() {
-        val view = LayoutInflater.from(context).inflate(R.layout.newapp_more_action, null)
-        view.findViewById<View>(R.id.textRename).setOnClickListener {
-            popupWindowMore?.dismiss()
-        }
-
-        view.findViewById<View>(R.id.textDel).setOnClickListener {
-            popupWindowMore?.dismiss()
-        }
-        popupWindowMore = CommonPopupWindow.Builder(context)
-            .setView(view)
-            .setWidthAndHeight(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-            .setOutsideTouchable(true) //在外不可用手指取消
-            .create()
-    }
-
 
 }
 
