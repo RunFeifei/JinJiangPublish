@@ -7,7 +7,7 @@ import com.as1k.expandablerecyclerview.model.ParentListItem
 import com.uestc.jinjiang.publish.R
 import com.uestc.jinjiang.publish.bean.FileDisplayInfo
 
-class CategoryAdapter : ExpandableRecyclerAdapter<CategoryViewHolder, CategoryListViewHolder>(){
+class MapBizTabAdapter : ExpandableRecyclerAdapter<CategoryViewHolder, CategoryListViewHolder>(){
 
     override fun onCreateParentViewHolder(parentViewGroup: ViewGroup
     ): CategoryViewHolder {

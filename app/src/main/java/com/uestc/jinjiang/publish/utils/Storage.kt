@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken
 import com.uestc.jinjiang.publish.bean.BizTypeEnum
 import com.uestc.jinjiang.publish.bean.FileDisplayInfo
 import com.uestc.jinjiang.publish.file.FileUtils
+import com.uestc.jinjiang.publish.tab.map.MapCategoryList
 import java.io.File
 import java.lang.reflect.Type
 import java.util.*
@@ -35,10 +36,6 @@ fun putProject2Db(file: FileDisplayInfo) {
 
 fun putJob2Db(file: FileDisplayInfo) {
     putFile2Db(BizTypeEnum.BIZ_TYPE_JOB, file)
-}
-
-fun putMap2Db(file: FileDisplayInfo) {
-    putFile2Db(BizTypeEnum.BIZ_TYPE_MAP, file)
 }
 
 fun putFunc2Db(file: FileDisplayInfo) {
@@ -75,4 +72,7 @@ fun db2Disk(): HashMap<String, ArrayList<FileDisplayInfo>>? {
     rootDB = GSON.fromJson(loadFile, TYPE)
     return rootDB
 }
+
+var rootDBForMap = ArrayList<MapCategoryList>()
+
 

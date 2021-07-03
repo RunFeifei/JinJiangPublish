@@ -65,7 +65,7 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
         listView = view.findViewById(R.id.listView) as RecyclerView
         (view.findViewById(R.id.imgAdd) as View).setOnClickListener {
             if (isMapFragment()) {
-
+                onClickAddFileFolder()
                 return@setOnClickListener
             }
             popupWindowAddFile?.showBottom(view, 0.5f)
