@@ -18,7 +18,7 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
-//        restoreDb()
+        restoreDb()
     }
 
 
@@ -26,7 +26,7 @@ class MainActivity : BaseActivity() {
         val intent = Intent(this, TabActivity::class.java)
         binding.item01.setOnLongClickListener {
             restoreDb()
-            false
+            true
         }
 
         binding.item01.setOnClickListener {

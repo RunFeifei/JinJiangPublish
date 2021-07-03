@@ -65,6 +65,7 @@ fun disk2db() {
 fun db2Disk(): HashMap<String, ArrayList<FileDisplayInfo>>? {
     val loadFile = FileUtils.loadFile(getDbPath())
     if (loadFile.isEmpty()) {
+        rootDB = HashMap<String, ArrayList<FileDisplayInfo>>()
         return null
     }
     rootDB = GSON.fromJson(loadFile, object : TypeToken<java.util.HashMap<String?, ArrayList<FileDisplayInfo?>?>?>() {}.type)
@@ -81,6 +82,7 @@ fun mapDisk2db() {
 fun mapDb2Disk():  ArrayList<MapCategoryList>? {
     val loadFile = FileUtils.loadFile(getDbPath(true))
     if (loadFile.isEmpty()) {
+        rootDBForMap = ArrayList<MapCategoryList>()
         return null
     }
     rootDBForMap = GSON.fromJson(loadFile, object : TypeToken<ArrayList<MapCategoryList>>() {}.type)

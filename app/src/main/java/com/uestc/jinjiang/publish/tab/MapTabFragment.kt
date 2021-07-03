@@ -32,7 +32,7 @@ class MapTabFragment : BaseTabFragment(), OnFolderLongClick {
         }
         file ?: return
         var toMap = rootDBForMap.map {
-            it.folderName to (it.movieList as MutableList)
+            it.folderName to (it.fileList as MutableList)
         }.toMap().toMutableMap()
         var list = toMap[folderSelected]
         list!!.add(file)
@@ -42,6 +42,7 @@ class MapTabFragment : BaseTabFragment(), OnFolderLongClick {
             MapCategoryList(it.key, it.value)
         } as java.util.ArrayList
         mapDisk2db()
+        adapter.notifyDataSetChanged()
     }
 
     override fun bizType(): BizTypeEnum {
