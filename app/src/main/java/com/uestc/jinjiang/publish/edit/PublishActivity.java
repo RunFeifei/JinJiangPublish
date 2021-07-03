@@ -28,7 +28,7 @@ import com.uestc.jinjiang.publish.utils.RichUtils;
 import com.uestc.jinjiang.publish.utils.Utils;
 import com.uestc.jinjiang.publish.utils.popup.CommonPopupWindow;
 import com.uestc.jinjiang.publish.view.RichEditor;
-import com.uestc.run.basebase.BaseActivity;
+import com.uestc.jinjiang.publish.base.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;

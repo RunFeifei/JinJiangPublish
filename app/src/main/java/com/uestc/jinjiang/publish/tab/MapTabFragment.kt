@@ -42,7 +42,6 @@ class MapTabFragment : BaseTabFragment(), OnFolderLongClick {
             MapCategoryList(it.key, it.value)
         } as java.util.ArrayList
         mapDisk2db()
-        adapter.notifyDataSetChanged()
     }
 
     override fun bizType(): BizTypeEnum {
@@ -67,6 +66,7 @@ class MapTabFragment : BaseTabFragment(), OnFolderLongClick {
         })
         listView.adapter = adapter
         adapter.setExpandableParentItemList(rootDBForMap)
+        adapter?.clickListener=this
         adapter.parentLongClick = this
     }
 

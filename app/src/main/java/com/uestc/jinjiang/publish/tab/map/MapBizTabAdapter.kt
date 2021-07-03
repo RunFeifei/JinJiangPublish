@@ -7,26 +7,28 @@ import com.as1k.expandablerecyclerview.adapter.ExpandableRecyclerAdapter
 import com.as1k.expandablerecyclerview.model.ParentListItem
 import com.uestc.jinjiang.publish.R
 import com.uestc.jinjiang.publish.bean.FileDisplayInfo
+import com.uestc.jinjiang.publish.tab.ListAdapter
 
 interface OnFolderLongClick {
     fun onFolderLongClick(v: View, folder: MapCategoryList)
 }
 
-class MapBizTabAdapter : ExpandableRecyclerAdapter<CategoryViewHolder, CategoryListViewHolder>() {
+class MapBizTabAdapter : ExpandableRecyclerAdapter<MapBizFileViewHolder, MapBizCategoryViewHolder>() {
 
     var parentLongClick: OnFolderLongClick? = null
+    var clickListener: ListAdapter.OnItemClickListener? = null
 
-    override fun onCreateParentViewHolder(parentViewGroup: ViewGroup): CategoryViewHolder {
+    override fun onCreateParentViewHolder(parentViewGroup: ViewGroup): MapBizFileViewHolder {
         val view = LayoutInflater.from(parentViewGroup.context).inflate(R.layout.item_category, parentViewGroup, false)
-        return CategoryViewHolder(view)
+        return MapBizFileViewHolder(view)
     }
 
-    override fun onCreateChildViewHolder(parentViewGroup: ViewGroup): CategoryListViewHolder {
+    override fun onCreateChildViewHolder(parentViewGroup: ViewGroup): MapBizCategoryViewHolder {
         val view = LayoutInflater.from(parentViewGroup.context).inflate(R.layout.list_item, parentViewGroup, false)
-        return CategoryListViewHolder(view)
+        return MapBizCategoryViewHolder(view)
     }
 
-    override fun onBindParentViewHolder(parentViewHolder: CategoryViewHolder, position: Int, parentListItem: ParentListItem) {
+    override fun onBindParentViewHolder(parentViewHolder: MapBizFileViewHolder, position: Int, parentListItem: ParentListItem) {
         val data = parentListItem as MapCategoryList
         parentViewHolder.bind(data)
         parentViewHolder.itemView.setOnLongClickListener {
@@ -35,9 +37,13 @@ class MapBizTabAdapter : ExpandableRecyclerAdapter<CategoryViewHolder, CategoryL
         }
     }
 
-    override fun onBindChildViewHolder(childViewHolder: CategoryListViewHolder, position: Int, childListItem: Any) {
+    override fun onBindChildViewHolder(childViewHolderMapBiz: MapBizCategoryViewHolder, position: Int, childListItem: Any) {
         val data = childListItem as FileDisplayInfo
-        childViewHolder.bind(data)
+        childViewHolderMapBiz.bind(data)
+        childViewHolderMapBiz.itemView.setOnClickListener {
+            clickListener?.onItemClickListener(it, data, position)
+            true
+        }
     }
 
 

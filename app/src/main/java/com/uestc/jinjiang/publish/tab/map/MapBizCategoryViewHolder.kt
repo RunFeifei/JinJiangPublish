@@ -9,7 +9,7 @@ import com.uestc.jinjiang.publish.bean.FileDisplayInfo
 import com.uestc.jinjiang.publish.bean.FileTypeEnum
 import java.text.SimpleDateFormat
 
-class CategoryListViewHolder(view: View) : ChildViewHolder(view) {
+class MapBizCategoryViewHolder(view: View) : ChildViewHolder(view) {
     fun bind(fileDisplayInfo: FileDisplayInfo) {
         itemView.findViewById<TextView>(R.id.textDesc).text = fileDisplayInfo.fileDesc
         itemView.findViewById<TextView>(R.id.textTime).text = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(fileDisplayInfo.fileTime)

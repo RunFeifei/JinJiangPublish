@@ -6,7 +6,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.angcyo.tablayout.delegate2.ViewPager2Delegate
 import com.uestc.jinjiang.publish.databinding.ActivityTabBinding
 import com.uestc.jinjiang.publish.tab.AdapterFragmentPager
-import com.uestc.run.basebase.BaseActivity
+import com.uestc.jinjiang.publish.base.BaseActivity
 
 
 class TabActivity : BaseActivity() {

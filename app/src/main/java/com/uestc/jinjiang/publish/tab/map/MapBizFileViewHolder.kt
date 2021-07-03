@@ -6,8 +6,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.as1k.expandablerecyclerview.viewholder.ParentViewHolder
 import com.uestc.jinjiang.publish.R
+import com.uestc.jinjiang.publish.tab.ListAdapter
 
-class CategoryViewHolder(itemView:View) : ParentViewHolder(itemView) {
+class MapBizFileViewHolder(itemView:View) : ParentViewHolder(itemView) {
     private lateinit var animation: RotateAnimation
 
     fun bind(mapCategoryList: MapCategoryList){
@@ -32,4 +33,6 @@ class CategoryViewHolder(itemView:View) : ParentViewHolder(itemView) {
         if (expanded)itemView.findViewById<ImageView>(R.id.iv_arrow_expand).rotation = 180f
         else itemView.findViewById<ImageView>(R.id.iv_arrow_expand).rotation = 0f
     }
+
+
 }

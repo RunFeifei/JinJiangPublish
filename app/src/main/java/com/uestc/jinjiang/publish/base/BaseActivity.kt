@@ -1,4 +1,4 @@
-package com.uestc.run.basebase
+package com.uestc.jinjiang.publish.base
 
 import android.content.Context
 import android.graphics.drawable.Drawable

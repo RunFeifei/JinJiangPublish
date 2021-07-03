@@ -1,11 +1,16 @@
 package com.uestc.jinjiang.publish
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
+import com.uestc.jinjiang.publish.base.App.initTBS
+import com.uestc.jinjiang.publish.base.BaseActivity
 import com.uestc.jinjiang.publish.databinding.ActivityMainBinding
+import com.uestc.jinjiang.publish.extend.RC_FILE_PICKER_PERM
 import com.uestc.jinjiang.publish.utils.db2Disk
+import com.uestc.jinjiang.publish.utils.deleteALlDb
 import com.uestc.jinjiang.publish.utils.mapDb2Disk
-import com.uestc.run.basebase.BaseActivity
+import pub.devrel.easypermissions.EasyPermissions
 
 
 class MainActivity : BaseActivity() {
@@ -26,6 +31,21 @@ class MainActivity : BaseActivity() {
         val intent = Intent(this, TabActivity::class.java)
         binding.item01.setOnLongClickListener {
             restoreDb()
+            if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                initTBS(this)
+            } else {
+                EasyPermissions.requestPermissions(this, getString(R.string.rationale_doc_picker), RC_FILE_PICKER_PERM, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            }
+            showToast("重新加载文件和内核")
+            true
+        }
+
+        binding.item02.setOnLongClickListener {
+            var deleteALlDb = deleteALlDb(this)
+            if (deleteALlDb) {
+                showToast("删除APP数据库")
+                onBackPressed()
+            }
             true
         }
 
@@ -59,6 +79,15 @@ class MainActivity : BaseActivity() {
         db2Disk?.toString()
         mapDb2Disk?.toString()
         dissLoading()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            initTBS(this)
+        } else {
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_doc_picker), RC_FILE_PICKER_PERM, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
     }
 
 
