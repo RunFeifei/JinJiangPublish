@@ -66,7 +66,7 @@ class MapTabFragment : BaseTabFragment(), OnFolderLongClick {
 
         })
         listView.adapter = adapter
-        adapter.addExpandableParentItemList(rootDBForMap)
+        adapter.setExpandableParentItemList(rootDBForMap)
         adapter?.clickListener = this
         adapter.parentLongClick = this
     }
