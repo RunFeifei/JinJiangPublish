@@ -36,7 +36,7 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
 
     lateinit var listView: RecyclerView
     lateinit var textTitle: TextView
-    var listAdapter: ListAdapter?=null
+    var listAdapter: ListAdapter? = null
     lateinit var popupWindowAddFile: CommonPopupWindow
 
 
@@ -74,7 +74,7 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
         initPop()
     }
 
-    protected  open fun initRecyclerView() {
+    protected open fun initRecyclerView() {
         listAdapter = ListAdapter(listView)
         listAdapter?.clickListener = this
         listView.layoutManager =
@@ -125,7 +125,7 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
         }
         if (requestCode == REQUEST_CODE_PHOTO && resultCode == Activity.RESULT_OK && data != null) {
             var path = Utils.getFileAbsolutePath(activity!!, data.data)
-            if (!path.endsWith("mp4")) {
+            if (!path.endsWith("mp4") && !path.endsWith("m4v")) {
                 Toast.makeText(activity!!, "不支持此视频类型", Toast.LENGTH_SHORT).show()
                 return
             }

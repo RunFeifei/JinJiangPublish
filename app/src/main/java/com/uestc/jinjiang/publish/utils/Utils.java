@@ -64,7 +64,7 @@ public final class Utils {
     }
 
     public static void openFile(Context context, FileDisplayInfo fileDisplayInfo) {
-        if (fileDisplayInfo.getFilePath().endsWith("mp4")) {
+        if (fileDisplayInfo.getFilePath().endsWith("mp4")||fileDisplayInfo.getFilePath().endsWith("m4v")) {
             TbsVideo.openVideo(context, fileDisplayInfo.getFilePath());
             return;
         }
