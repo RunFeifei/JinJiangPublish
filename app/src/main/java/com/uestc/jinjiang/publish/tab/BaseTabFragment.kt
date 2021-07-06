@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -51,15 +52,11 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         textTitle = view.findViewById(R.id.textTitle) as TextView
         textTitle.text = bizType().desc
-        (view.findViewById(R.id.imgSearch) as View).visibility =
-            if (isMapFragment()) View.INVISIBLE else View.VISIBLE
+        (view.findViewById(R.id.imgAdd) as ImageView).setImageResource(if (isMapFragment()) R.drawable.ic_add_folder else R.drawable.ic_add)
+        (view.findViewById(R.id.imgSearch) as View).visibility = if (isMapFragment()) View.INVISIBLE else View.VISIBLE
         (view.findViewById(R.id.imgSearch) as View).setOnClickListener {
             Utils.dialog(activity, "搜索", "确认") { key ->
-                val datasList = rootDB[bizType().code]
-                val filterList = datasList?.filter { file ->
-                    file.fileDesc.contains(key)
-                }
-                listAdapter?.setData(filterList)
+                onSearch(key)
             }
         }
         listView = view.findViewById(R.id.listView) as RecyclerView
@@ -95,6 +92,14 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
     }
 
     protected open fun onClickAddFileFolder() {
+    }
+
+    protected open fun onSearch(keyword: String) {
+        val datasList = rootDB[bizType().code]
+        val filterList = datasList?.filter { file ->
+            file.fileDesc.contains(keyword)
+        }
+        listAdapter?.setData(filterList)
     }
 
 
