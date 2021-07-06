@@ -92,5 +92,29 @@ class MapTabFragment : BaseTabFragment(), OnFolderLongClick {
         popupWindowAddFile?.showBottom(view, 0.5f)
         folderSelected = folder.folderName
     }
+
+    override fun onSearch(keyword: String) {
+        rootDBForMap ?: return
+        rootDBForMap.isEmpty() ?: return
+        var mutableListOf = mutableListOf<MapCategoryList>()
+        for (mapCategoryList in rootDBForMap) {
+            mapCategoryList.fileList ?: continue
+            var mutableSons = mutableListOf<FileDisplayInfo>()
+            mapCategoryList.fileList.filter {
+                it.fileDesc.contains(keyword)
+            }.forEach { file ->
+                mutableSons.add(file)
+            }
+            if (mutableSons.isNotEmpty()) {
+                mutableListOf.add(MapCategoryList(mapCategoryList.folderName, mutableSons))
+            }
+        }
+        adapter?.setExpandableParentItemList(mutableListOf)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adapter?.setExpandableParentItemList(rootDBForMap)
+    }
 }
 
