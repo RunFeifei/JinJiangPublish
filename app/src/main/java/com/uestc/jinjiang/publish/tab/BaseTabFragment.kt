@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.uestc.jinjiang.publish.R
 import com.uestc.jinjiang.publish.bean.BizTypeEnum
 import com.uestc.jinjiang.publish.bean.FileDisplayInfo
+import com.uestc.jinjiang.publish.bean.OnItemClickListener
 import com.uestc.jinjiang.publish.edit.PublishActivity
 import com.uestc.jinjiang.publish.extend.RC_FILE_PICKER_PERM
 import com.uestc.jinjiang.publish.extend.RC_HTML_PICKER_PERM
@@ -33,7 +34,7 @@ import java.util.*
  * @Description 基本信息tab
  * @date 2021/5/30
  */
-open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListener {
+open abstract class BaseTabFragment : Fragment(), OnItemClickListener {
 
     lateinit var listView: RecyclerView
     lateinit var textTitle: TextView
@@ -183,13 +184,16 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
     }
 
 
-    override fun onItemClickListener(
-        view: View?,
-        fileDisplayInfo: FileDisplayInfo?,
-        position: Int
-    ) {
+    override fun onItemClickListener(view: View?, fileDisplayInfo: FileDisplayInfo?, position: Int) {
         fileDisplayInfo ?: return
         Utils.openFile(activity, fileDisplayInfo)
+    }
+
+    override fun onItemDeleteListener(view: View?, fileDisplayInfo: FileDisplayInfo?, position: Int) {
+        fileDisplayInfo ?: return
+        rootDB[bizType().code]?.remove(fileDisplayInfo)
+        var datasList = rootDB[bizType().code]
+        listAdapter?.setData(datasList)
     }
 
     private fun initPop() {
@@ -232,6 +236,7 @@ open abstract class BaseTabFragment : Fragment(), ListAdapter.OnItemClickListene
             .setAnimationStyle(R.style.pop_animation) //设置popWindow的出场动画
             .create()
     }
+
 
 }
 

@@ -32,7 +32,7 @@ class MapTabFragment : BaseTabFragment(), OnFolderLongClick {
         }
         file ?: return
         var toMap = rootDBForMap.map {
-            it.folderName to (it.fileList as MutableList)
+            it.folderName to (it.fileList)
         }.toMap().toMutableMap()
         var list = toMap[folderSelected]
         list!!.add(file)
@@ -66,9 +66,9 @@ class MapTabFragment : BaseTabFragment(), OnFolderLongClick {
 
         })
         listView.adapter = adapter
-        adapter.setExpandableParentItemList(rootDBForMap)
         adapter?.clickListener = this
         adapter.parentLongClick = this
+        adapter.setExpandableParentItemList(rootDBForMap)
     }
 
     override fun onClickAddFileFolder() {
@@ -99,7 +99,7 @@ class MapTabFragment : BaseTabFragment(), OnFolderLongClick {
         var mutableListOf = mutableListOf<MapCategoryList>()
         for (mapCategoryList in rootDBForMap) {
             mapCategoryList.fileList ?: continue
-            var mutableSons = mutableListOf<FileDisplayInfo>()
+            var mutableSons = ArrayList<FileDisplayInfo>()
             mapCategoryList.fileList.filter {
                 it.fileDesc.contains(keyword)
             }.forEach { file ->
@@ -115,6 +115,15 @@ class MapTabFragment : BaseTabFragment(), OnFolderLongClick {
     override fun onResume() {
         super.onResume()
         adapter?.setExpandableParentItemList(rootDBForMap)
+    }
+
+    override fun onItemDeleteListener(view: View?, fileDisplayInfo: FileDisplayInfo?, position: Int) {
+        fileDisplayInfo ?: return
+        rootDBForMap ?: return
+        for (mapCategoryList in rootDBForMap) {
+            mapCategoryList.fileList.remove(fileDisplayInfo)
+        }
+        adapter.setExpandableParentItemList(rootDBForMap)
     }
 }
 
