@@ -106,7 +106,7 @@ class MapTabFragment : BaseTabFragment(), OnFolderLongClick {
                 mutableSons.add(file)
             }
             if (mutableSons.isNotEmpty()) {
-                mutableListOf.add(MapCategoryList(mapCategoryList.folderName, mutableSons))
+                mutableListOf.add(MapCategoryList(mapCategoryList.folderName, mutableSons, true))
             }
         }
         adapter?.setExpandableParentItemList(mutableListOf)
