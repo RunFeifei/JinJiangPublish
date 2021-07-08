@@ -54,7 +54,6 @@ open abstract class BaseTabFragment : Fragment(), OnItemClickListener {
         textTitle = view.findViewById(R.id.textTitle) as TextView
         textTitle.text = bizType().desc
         (view.findViewById(R.id.imgAdd) as ImageView).setImageResource(if (isMapFragment()) R.drawable.ic_add_folder else R.drawable.ic_add)
-        (view.findViewById(R.id.imgSearch) as View).visibility = if (isMapFragment()) View.INVISIBLE else View.VISIBLE
         (view.findViewById(R.id.imgSearch) as View).setOnClickListener {
             Utils.dialog(activity, "搜索", "确认") { key ->
                 onSearch(key)
