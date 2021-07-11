@@ -9,6 +9,7 @@ import com.uestc.jinjiang.publish.databinding.ActivityMainBinding
 import com.uestc.jinjiang.publish.extend.RC_FILE_PICKER_PERM
 import com.uestc.jinjiang.publish.utils.db2Disk
 import com.uestc.jinjiang.publish.utils.deleteALlDb
+import com.uestc.jinjiang.publish.utils.funcDb2Disk
 import com.uestc.jinjiang.publish.utils.mapDb2Disk
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -76,8 +77,10 @@ class MainActivity : BaseActivity() {
         showLoading()
         var db2Disk = db2Disk()
         var mapDb2Disk = mapDb2Disk()
+        var funcDb2Disk = funcDb2Disk()
         db2Disk?.toString()
         mapDb2Disk?.toString()
+        funcDb2Disk?.toString()
         dissLoading()
     }
 

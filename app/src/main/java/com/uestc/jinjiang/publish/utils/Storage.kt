@@ -42,11 +42,6 @@ fun putJob2Db(file: FileDisplayInfo) {
     putFile2Db(BizTypeEnum.BIZ_TYPE_JOB, file)
 }
 
-fun putFunc2Db(file: FileDisplayInfo) {
-    putFile2Db(BizTypeEnum.BIZ_TYPE_FUNC, file)
-}
-
-
 fun putFile2Db(type: BizTypeEnum, file: FileDisplayInfo) {
     var array = rootDB[type.code]
     array = if (array == null || array.isEmpty()) ArrayList<FileDisplayInfo>() else array
@@ -77,6 +72,7 @@ fun db2Disk(): HashMap<String, ArrayList<FileDisplayInfo>>? {
     return rootDB
 }
 
+//map biz start
 var rootDBForMap = ArrayList<MapCategoryList>()
 
 fun mapDisk2db() {
@@ -93,6 +89,27 @@ fun mapDb2Disk(): ArrayList<MapCategoryList>? {
     rootDBForMap = GSON.fromJson(loadFile, object : TypeToken<ArrayList<MapCategoryList>>() {}.type)
     return rootDBForMap
 }
+//map biz end
+
+
+//func biz start
+var rootDBForFunc = ArrayList<MapCategoryList>()
+
+fun funcDisk2db() {
+    val toJson = GSON.toJson(rootDBForFunc)
+    FileUtils.saveStr(getDbPath(true), toJson)
+}
+
+fun funcDb2Disk(): ArrayList<MapCategoryList>? {
+    val loadFile = FileUtils.loadFile(getDbPath(true))
+    if (loadFile.isEmpty()) {
+        rootDBForFunc = ArrayList<MapCategoryList>()
+        return null
+    }
+    rootDBForFunc = GSON.fromJson(loadFile, object : TypeToken<ArrayList<MapCategoryList>>() {}.type)
+    return rootDBForFunc
+}
+//func biz end
 
 fun deleteALlDb(context: Activity): Boolean {
     if (EasyPermissions.hasPermissions(context, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
