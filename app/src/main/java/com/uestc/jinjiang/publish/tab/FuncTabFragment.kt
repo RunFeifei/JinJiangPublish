@@ -8,7 +8,7 @@ import com.uestc.jinjiang.publish.bean.BizTypeEnum
 import com.uestc.jinjiang.publish.bean.FileDisplayInfo
 import com.uestc.jinjiang.publish.tab.map.MapBizTabAdapter
 import com.uestc.jinjiang.publish.tab.map.MapCategoryList
-import com.uestc.jinjiang.publish.tab.map.OnFolderLongClick
+import com.uestc.jinjiang.publish.tab.map.OnFolderClick
 import com.uestc.jinjiang.publish.utils.*
 
 
@@ -17,7 +17,7 @@ import com.uestc.jinjiang.publish.utils.*
  * @Description 基本信息tab
  * @date 2021/5/30
  */
-class FuncTabFragment : BaseTabFragment() , OnFolderLongClick {
+class FuncTabFragment : BaseTabFragment() , OnFolderClick {
 
 
     private val adapter = MapBizTabAdapter()
@@ -123,6 +123,10 @@ class FuncTabFragment : BaseTabFragment() , OnFolderLongClick {
             mapCategoryList.fileList.remove(fileDisplayInfo)
         }
         adapter.setExpandableParentItemList(rootDBForFunc)
+    }
+
+    override fun onFolderDelClick(v: View, folder: MapCategoryList) {
+        TODO("Not yet implemented")
     }
 }
 

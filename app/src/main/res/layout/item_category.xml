@@ -13,6 +13,8 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:padding="16dp"
+        android:gravity="center_vertical"
+        tools:background="#f0000f"
         tools:ignore="UseCompoundDrawables">
 
         <ImageView
@@ -36,6 +38,14 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_keyboard_arrow_down_black_24dp" />
+
+        <ImageView
+            android:id="@+id/imgDelFolder"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_del"
+            android:layout_marginLeft="15dp"
+            />
 
     </LinearLayout>
 

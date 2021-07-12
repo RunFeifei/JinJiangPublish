@@ -8,15 +8,15 @@ import com.as1k.expandablerecyclerview.model.ParentListItem
 import com.uestc.jinjiang.publish.R
 import com.uestc.jinjiang.publish.bean.FileDisplayInfo
 import com.uestc.jinjiang.publish.bean.OnItemClickListener
-import com.uestc.jinjiang.publish.tab.ListAdapter
 
-interface OnFolderLongClick {
+interface OnFolderClick {
     fun onFolderLongClick(v: View, folder: MapCategoryList)
+    fun onFolderDelClick(v: View, folder: MapCategoryList)
 }
 
 class MapBizTabAdapter : ExpandableRecyclerAdapter<MapBizFileViewHolder, MapBizCategoryViewHolder>() {
 
-    var parentLongClick: OnFolderLongClick? = null
+    var parentLongClick: OnFolderClick? = null
     var clickListener: OnItemClickListener? = null
 
     override fun onCreateParentViewHolder(parentViewGroup: ViewGroup): MapBizFileViewHolder {
@@ -35,6 +35,9 @@ class MapBizTabAdapter : ExpandableRecyclerAdapter<MapBizFileViewHolder, MapBizC
         parentViewHolder.itemView.setOnLongClickListener {
             parentLongClick?.onFolderLongClick(it, data)
             true
+        }
+        parentViewHolder.itemView.findViewById<View>(R.id.imgDelFolder).setOnClickListener {
+            parentLongClick?.onFolderDelClick(it, data)
         }
     }
 
