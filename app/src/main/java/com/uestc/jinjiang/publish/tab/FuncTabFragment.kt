@@ -126,7 +126,10 @@ class FuncTabFragment : BaseTabFragment() , OnFolderClick {
     }
 
     override fun onFolderDelClick(v: View, folder: MapCategoryList) {
-        TODO("Not yet implemented")
+        folder?:return
+        rootDBForFunc ?: return
+        rootDBForFunc.remove(folder)
+        adapter.setExpandableParentItemList(rootDBForFunc)
     }
 }
 
