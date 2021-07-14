@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -30,6 +31,7 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import com.loading.dialog.AndroidLoadingDialog;
 import com.tencent.smtt.sdk.TbsVideo;
@@ -63,7 +65,11 @@ public final class Utils {
         return iosLoadingDialog;
     }
 
-    public static void openFile(Context context, FileDisplayInfo fileDisplayInfo) {
+    public static void openFile(Activity context, FileDisplayInfo fileDisplayInfo) {
+        if (fileDisplayInfo.getFilePath().endsWith("ppt") || fileDisplayInfo.getFilePath().endsWith("pptx")) {
+            getPPTFileIntent(new File(fileDisplayInfo.getFilePath()), context);
+            return;
+        }
         if (fileDisplayInfo.getFilePath().endsWith("mp4") || fileDisplayInfo.getFilePath().endsWith("m4v")) {
             TbsVideo.openVideo(context, fileDisplayInfo.getFilePath());
             return;
@@ -403,6 +409,38 @@ public final class Utils {
 
     public interface OnSearchListener {
         void onSearch(String v);
+    }
+
+    //android获取一个用于打开PPT文件的intent
+    //https://www.jianshu.com/p/1414101858c1
+    //https://juejin.cn/post/6844903936600571917
+    public static Intent getPPTFileIntent(File file, Activity context) {
+        Intent intent = new Intent("android.intent.action.VIEW");
+        intent.addCategory("android.intent.category.DEFAULT");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        Uri uri;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            uri = getUriForFile(context.getApplicationContext(), file);
+        } else {
+            uri = Uri.fromFile(file);
+        }
+        intent.setDataAndType(uri, "application/vnd.ms-powerpoint");
+        context.startActivity(intent);
+        return intent;
+    }
+
+    public static Uri getUriForFile(Context context, File file) {
+        if (context == null || file == null) {
+            throw new NullPointerException();
+        }
+        Uri uri;
+        if (Build.VERSION.SDK_INT >= 24) {
+            uri = FileProvider.getUriForFile(context.getApplicationContext(), "com.uestc.jinjiang.publish", file);
+        } else {
+            uri = Uri.fromFile(file);
+        }
+        return uri;
     }
 
 
