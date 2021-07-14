@@ -201,7 +201,9 @@ open abstract class BaseTabFragment : Fragment(), OnItemClickListener {
         view.findViewById<View>(R.id.layAddFile).setOnClickListener {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "*/*";
-            val supportedMimeTypes = arrayOf("application/pdf", "application/msword", "application/vnd.ms-powerpoint","application/vnd.openxmlformats-officedocument.presentationml.presentation")
+            val supportedMimeTypes = arrayOf("application/pdf", "application/msword", "application/vnd.ms-powerpoint","application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            )
             intent.putExtra(Intent.EXTRA_MIME_TYPES, supportedMimeTypes);
             intent.addCategory(Intent.CATEGORY_OPENABLE)
             startActivityForResult(intent, REQUEST_CODE_DOC)
