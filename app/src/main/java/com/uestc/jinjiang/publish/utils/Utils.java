@@ -64,7 +64,7 @@ public final class Utils {
     }
 
     public static void openFile(Context context, FileDisplayInfo fileDisplayInfo) {
-        if (fileDisplayInfo.getFilePath().endsWith("mp4")||fileDisplayInfo.getFilePath().endsWith("m4v")) {
+        if (fileDisplayInfo.getFilePath().endsWith("mp4") || fileDisplayInfo.getFilePath().endsWith("m4v")) {
             TbsVideo.openVideo(context, fileDisplayInfo.getFilePath());
             return;
         }
@@ -336,7 +336,7 @@ public final class Utils {
                 String displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                 try {
                     InputStream is = contentResolver.openInputStream(uri);
-                    File cache = new File(context.getExternalCacheDir().getAbsolutePath(), Math.round((Math.random() + 1) * 1000) + displayName);
+                    File cache = new File(context.getExternalCacheDir().getAbsolutePath(), displayName);
                     FileOutputStream fos = new FileOutputStream(cache);
                     FileUtils.copy(is, fos);
                     file = cache;
