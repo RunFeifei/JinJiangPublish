@@ -80,6 +80,7 @@ class JobTabFragment : BaseTabFragment(), OnFolderClick {
             }
             var newFolder = MapCategoryList(folder, ArrayList<FileDisplayInfo>())
             rootDBForJob.add(newFolder)
+            jobDisk2db()
             var arrayList = ArrayList<MapCategoryList>()
             arrayList.add(newFolder)
             adapter.addExpandableParentItemList(arrayList)

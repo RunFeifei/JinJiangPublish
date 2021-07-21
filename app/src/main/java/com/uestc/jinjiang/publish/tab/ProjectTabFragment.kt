@@ -80,6 +80,7 @@ class ProjectTabFragment : BaseTabFragment(), OnFolderClick {
             }
             var newFolder = MapCategoryList(folder, ArrayList<FileDisplayInfo>())
             rootDBForProject.add(newFolder)
+            projectDisk2db()
             var arrayList = ArrayList<MapCategoryList>()
             arrayList.add(newFolder)
             adapter.addExpandableParentItemList(arrayList)

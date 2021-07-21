@@ -81,6 +81,7 @@ class FuncTabFragment : BaseTabFragment() , OnFolderClick {
             }
             var newFolder = MapCategoryList(folder, ArrayList<FileDisplayInfo>())
             rootDBForFunc.add(newFolder)
+            funcDisk2db()
             var arrayList = ArrayList<MapCategoryList>()
             arrayList.add(newFolder)
             adapter.addExpandableParentItemList(arrayList)
