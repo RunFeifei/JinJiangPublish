@@ -11,7 +11,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.uestc.jinjiang.publish.R
 import com.uestc.jinjiang.publish.bean.BizTypeEnum
@@ -22,7 +21,6 @@ import com.uestc.jinjiang.publish.extend.RC_FILE_PICKER_PERM
 import com.uestc.jinjiang.publish.extend.RC_HTML_PICKER_PERM
 import com.uestc.jinjiang.publish.utils.Utils
 import com.uestc.jinjiang.publish.utils.popup.CommonPopupWindow
-import com.uestc.jinjiang.publish.utils.rootDB
 import droidninja.filepicker.FilePickerConst.REQUEST_CODE_DOC
 import droidninja.filepicker.FilePickerConst.REQUEST_CODE_PHOTO
 import pub.devrel.easypermissions.EasyPermissions
@@ -38,7 +36,6 @@ open abstract class BaseTabFragment : Fragment(), OnItemClickListener {
 
     lateinit var listView: RecyclerView
     lateinit var textTitle: TextView
-    var listAdapter: ListAdapter? = null
     lateinit var popupWindowAddFile: CommonPopupWindow
 
 
@@ -72,20 +69,8 @@ open abstract class BaseTabFragment : Fragment(), OnItemClickListener {
     }
 
     protected open fun initRecyclerView() {
-        listAdapter = ListAdapter(listView)
-        listAdapter?.clickListener = this
-        listView.layoutManager =
-            LinearLayoutManager(this@BaseTabFragment.context, LinearLayoutManager.VERTICAL, false)
-        listView.adapter = listAdapter
-        var datasList = rootDB[bizType().code]
-        listAdapter?.setData(datasList)
     }
 
-    override fun onResume() {
-        super.onResume()
-        var datasList = rootDB[bizType().code]
-        listAdapter?.setData(datasList)
-    }
 
     protected open fun isMapFragment(): Boolean {
         return false
@@ -95,11 +80,6 @@ open abstract class BaseTabFragment : Fragment(), OnItemClickListener {
     }
 
     protected open fun onSearch(keyword: String) {
-        val datasList = rootDB[bizType().code]
-        val filterList = datasList?.filter { file ->
-            file.fileDesc.contains(keyword)
-        }
-        listAdapter?.setData(filterList)
     }
 
 
@@ -178,10 +158,6 @@ open abstract class BaseTabFragment : Fragment(), OnItemClickListener {
     abstract fun onAddFileSelect(file: FileDisplayInfo?)
     abstract fun bizType(): BizTypeEnum
 
-    protected fun refreshListView(file: FileDisplayInfo) {
-        listAdapter?.addData(file)
-    }
-
 
     override fun onItemClickListener(view: View?, fileDisplayInfo: FileDisplayInfo?, position: Int) {
         fileDisplayInfo ?: return
@@ -189,10 +165,6 @@ open abstract class BaseTabFragment : Fragment(), OnItemClickListener {
     }
 
     override fun onItemDeleteListener(view: View?, fileDisplayInfo: FileDisplayInfo?, position: Int) {
-        fileDisplayInfo ?: return
-        rootDB[bizType().code]?.remove(fileDisplayInfo)
-        var datasList = rootDB[bizType().code]
-        listAdapter?.setData(datasList)
     }
 
     private fun initPop() {
@@ -201,7 +173,8 @@ open abstract class BaseTabFragment : Fragment(), OnItemClickListener {
         view.findViewById<View>(R.id.layAddFile).setOnClickListener {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "*/*";
-            val supportedMimeTypes = arrayOf("application/pdf", "application/msword", "application/vnd.ms-powerpoint","application/vnd.openxmlformats-officedocument.presentationml.presentation",
+            val supportedMimeTypes = arrayOf(
+                "application/pdf", "application/msword", "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation",
                 "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             )
             intent.putExtra(Intent.EXTRA_MIME_TYPES, supportedMimeTypes);

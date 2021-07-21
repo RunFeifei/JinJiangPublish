@@ -7,10 +7,7 @@ import com.uestc.jinjiang.publish.base.App.initTBS
 import com.uestc.jinjiang.publish.base.BaseActivity
 import com.uestc.jinjiang.publish.databinding.ActivityMainBinding
 import com.uestc.jinjiang.publish.extend.RC_FILE_PICKER_PERM
-import com.uestc.jinjiang.publish.utils.db2Disk
-import com.uestc.jinjiang.publish.utils.deleteALlDb
-import com.uestc.jinjiang.publish.utils.funcDb2Disk
-import com.uestc.jinjiang.publish.utils.mapDb2Disk
+import com.uestc.jinjiang.publish.utils.*
 import pub.devrel.easypermissions.EasyPermissions
 
 
@@ -75,12 +72,16 @@ class MainActivity : BaseActivity() {
 
     private fun restoreDb() {
         showLoading()
-        var db2Disk = db2Disk()
         var mapDb2Disk = mapDb2Disk()
         var funcDb2Disk = funcDb2Disk()
-        db2Disk?.toString()
+        var basicDb2Disk = basicDb2Disk()
+        var jobDb2Disk = jobDb2Disk()
+        var projectDb2Disk = projectDb2Disk()
         mapDb2Disk?.toString()
         funcDb2Disk?.toString()
+        basicDb2Disk?.toString()
+        jobDb2Disk?.toString()
+        projectDb2Disk?.toString()
         dissLoading()
     }
 
