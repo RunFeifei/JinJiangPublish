@@ -46,6 +46,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 
 import droidninja.filepicker.FilePickerConst;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -462,9 +463,30 @@ public final class Utils {
         } else {
             uri = Uri.fromFile(file);
         }
-        intent.setDataAndType(uri, "application/vnd.ms-powerpoint");
+        intent.setDataAndType(uri, getFileOpenType(file));
         context.startActivity(intent);
         return intent;
+    }
+
+
+    private static String getFileOpenType(File file) {
+        /* 取得扩展名 */
+        String end = file.getName().substring(file.getName().lastIndexOf(".") + 1, file.getName().length()).toLowerCase(Locale.getDefault());
+        /* 依扩展名的类型决定MimeType */
+        if (end.equals("ppt") || end.equals("pptx")) {
+            return DATA_TYPE_PPT;
+        } else if (end.equals("xls") || end.equals("xlsx")) {
+            return DATA_TYPE_EXCEL;
+        } else if (end.equals("doc") || end.equals("docx")) {
+            return DATA_TYPE_WORD;
+        } else if (end.equals("pdf")) {
+            return DATA_TYPE_PDF;
+        } else if (end.equals("mp4")) {
+            return DATA_TYPE_VIDEO;
+        } else if (end.equals("m4v")) {
+            return DATA_TYPE_VIDEO;
+        }
+        return DATA_TYPE_ALL;
     }
 
     public static Uri getUriForFile(Context context, File file) {
@@ -479,6 +501,23 @@ public final class Utils {
         }
         return uri;
     }
+
+
+    /**
+     * 声明各种类型文件的dataType
+     **/
+    private static final String DATA_TYPE_ALL = "*/*";//未指定明确的文件类型，不能使用精确类型的工具打开，需要用户选择
+    private static final String DATA_TYPE_APK = "application/vnd.android.package-archive";
+    private static final String DATA_TYPE_VIDEO = "video/*";
+    private static final String DATA_TYPE_AUDIO = "audio/*";
+    private static final String DATA_TYPE_HTML = "text/html";
+    private static final String DATA_TYPE_IMAGE = "image/*";
+    private static final String DATA_TYPE_PPT = "application/vnd.ms-powerpoint";
+    private static final String DATA_TYPE_EXCEL = "application/vnd.ms-excel";
+    private static final String DATA_TYPE_WORD = "application/msword";
+    private static final String DATA_TYPE_CHM = "application/x-chm";
+    private static final String DATA_TYPE_TXT = "text/plain";
+    private static final String DATA_TYPE_PDF = "application/pdf";
 
 
 }
