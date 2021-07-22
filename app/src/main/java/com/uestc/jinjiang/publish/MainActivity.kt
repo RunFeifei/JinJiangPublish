@@ -94,5 +94,14 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        jobDisk2db()
+        funcDisk2db()
+        mapDisk2db()
+        basicDisk2db()
+        projectDisk2db()
+    }
+
 
 }
