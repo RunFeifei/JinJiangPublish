@@ -397,6 +397,35 @@ public final class Utils {
         dialog.getWindow().setAttributes(p);
     }
 
+    public static void delDialog(Activity context, OnSearchListener positiveClick) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        final AlertDialog dialog = builder.create();
+        View dialogView = View.inflate(context, R.layout.dialog_edit, null);
+        dialog.setView(dialogView);
+        dialog.show();
+        EditText etPwd = (EditText) dialogView.findViewById(R.id.textEdit);
+        etPwd.setVisibility(View.GONE);
+        TextView textTitle = (TextView) dialogView.findViewById(R.id.textTitle);
+        textTitle.setText("请确认是否删除?");
+        TextView btnPositive = (TextView) dialogView.findViewById(R.id.btnPositive);
+        btnPositive.setText("确认");
+        TextView btnCancel = (TextView) dialogView.findViewById(R.id.btnNegative);
+        btnPositive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (positiveClick != null) {
+                    positiveClick.onSearch("");
+                }
+                dialog.dismiss();
+            }
+        });
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
+        android.view.WindowManager.LayoutParams p = dialog.getWindow().getAttributes();  //获取对话框当前的参数值
+        p.height = dp2px(context, 200);
+        p.width = dp2px(context, 500);
+        dialog.getWindow().setAttributes(p);
+    }
+
     public static int px2dp(Context context, float pxValue) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, pxValue, context.getResources().getDisplayMetrics());
     }

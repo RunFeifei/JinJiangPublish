@@ -25,6 +25,8 @@
         android:layout_height="40dp"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="20dp"
+        tools:background="#00ff00"
+        tools:visibility="gone"
         android:layout_marginRight="30dp"
         android:paddingLeft="10dp"
         android:background="@drawable/shape_edit"

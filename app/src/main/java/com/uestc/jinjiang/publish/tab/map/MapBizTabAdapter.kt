@@ -1,5 +1,6 @@
 package com.uestc.jinjiang.publish.tab.map
 
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import com.as1k.expandablerecyclerview.model.ParentListItem
 import com.uestc.jinjiang.publish.R
 import com.uestc.jinjiang.publish.bean.FileDisplayInfo
 import com.uestc.jinjiang.publish.bean.OnItemClickListener
+import com.uestc.jinjiang.publish.utils.Utils
 
 interface OnFolderClick {
     fun onFolderLongClick(v: View, folder: MapCategoryList)
@@ -48,7 +50,9 @@ class MapBizTabAdapter : ExpandableRecyclerAdapter<MapBizFileViewHolder, MapBizC
             clickListener?.onItemClickListener(it, data, position)
         }
         childViewHolderMapBiz.itemView.setOnLongClickListener {
-            clickListener?.onItemDeleteListener(it, data, position)
+            Utils.delDialog(it.context!! as Activity) { _ ->
+                clickListener?.onItemDeleteListener(it, data, position)
+            }
             true
         }
     }
