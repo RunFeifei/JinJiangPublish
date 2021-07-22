@@ -71,8 +71,8 @@
         android:id="@+id/imgAdd"
         android:layout_width="78dp"
         android:layout_height="78dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginRight="90dp"
+        android:layout_marginBottom="70dp"
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

@@ -46,7 +46,7 @@ class BasicTabFragment : BaseTabFragment(), OnFolderClick {
     }
 
     override fun bizType(): BizTypeEnum {
-        return BizTypeEnum.BIZ_TYPE_MAP
+        return BizTypeEnum.BIZ_TYPE_BASIC
     }
 
     override fun isMapFragment(): Boolean {

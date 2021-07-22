@@ -44,7 +44,7 @@ class ProjectTabFragment : BaseTabFragment(), OnFolderClick {
     }
 
     override fun bizType(): BizTypeEnum {
-        return BizTypeEnum.BIZ_TYPE_MAP
+        return BizTypeEnum.BIZ_TYPE_PROJECT
     }
 
     override fun isMapFragment(): Boolean {

@@ -66,8 +66,16 @@ public final class Utils {
     }
 
     public static void openFile(Activity context, FileDisplayInfo fileDisplayInfo) {
-        if (fileDisplayInfo.getFilePath().endsWith("ppt") || fileDisplayInfo.getFilePath().endsWith("pptx")) {
-            getPPTFileIntent(new File(fileDisplayInfo.getFilePath()), context);
+        if (fileDisplayInfo.getFilePath().endsWith("ppt")
+                || fileDisplayInfo.getFilePath().endsWith("pptx")
+                || fileDisplayInfo.getFilePath().endsWith("doc")
+                || fileDisplayInfo.getFilePath().endsWith("docx")
+                || fileDisplayInfo.getFilePath().endsWith("xls")
+                || fileDisplayInfo.getFilePath().endsWith("xlsx")
+                || fileDisplayInfo.getFilePath().endsWith("mp4")
+                || fileDisplayInfo.getFilePath().endsWith("m4v")
+        ) {
+            getOutFileIntent(new File(fileDisplayInfo.getFilePath()), context);
             return;
         }
         if (fileDisplayInfo.getFilePath().endsWith("mp4") || fileDisplayInfo.getFilePath().endsWith("m4v")) {
@@ -414,7 +422,7 @@ public final class Utils {
     //android获取一个用于打开PPT文件的intent
     //https://www.jianshu.com/p/1414101858c1
     //https://juejin.cn/post/6844903936600571917
-    public static Intent getPPTFileIntent(File file, Activity context) {
+    public static Intent getOutFileIntent(File file, Activity context) {
         Intent intent = new Intent("android.intent.action.VIEW");
         intent.addCategory("android.intent.category.DEFAULT");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
