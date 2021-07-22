@@ -37,6 +37,7 @@ open abstract class BaseTabFragment : Fragment(), OnItemClickListener {
     lateinit var listView: RecyclerView
     lateinit var textTitle: TextView
     lateinit var popupWindowAddFile: CommonPopupWindow
+    var justSearched = false
 
 
     override fun onCreateView(
@@ -80,6 +81,7 @@ open abstract class BaseTabFragment : Fragment(), OnItemClickListener {
     }
 
     protected open fun onSearch(keyword: String) {
+        justSearched = true
     }
 
 

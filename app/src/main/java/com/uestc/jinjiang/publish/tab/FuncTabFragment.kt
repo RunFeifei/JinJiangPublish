@@ -17,7 +17,7 @@ import com.uestc.jinjiang.publish.utils.*
  * @Description 基本信息tab
  * @date 2021/5/30
  */
-class FuncTabFragment : BaseTabFragment() , OnFolderClick {
+class FuncTabFragment : BaseTabFragment(), OnFolderClick {
 
 
     private val adapter = MapBizTabAdapter()
@@ -114,7 +114,10 @@ class FuncTabFragment : BaseTabFragment() , OnFolderClick {
 
     override fun onResume() {
         super.onResume()
-        adapter?.setExpandableParentItemList(rootDBForFunc)
+        if (justSearched) {
+            justSearched = false
+            adapter?.setExpandableParentItemList(rootDBForFunc)
+        }
     }
 
     override fun onItemDeleteListener(view: View?, fileDisplayInfo: FileDisplayInfo?, position: Int) {
@@ -127,7 +130,7 @@ class FuncTabFragment : BaseTabFragment() , OnFolderClick {
     }
 
     override fun onFolderDelClick(v: View, folder: MapCategoryList) {
-        folder?:return
+        folder ?: return
         rootDBForFunc ?: return
         rootDBForFunc.remove(folder)
         adapter.setExpandableParentItemList(rootDBForFunc)
