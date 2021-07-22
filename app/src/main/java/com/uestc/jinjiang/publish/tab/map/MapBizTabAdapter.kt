@@ -47,8 +47,9 @@ class MapBizTabAdapter : ExpandableRecyclerAdapter<MapBizFileViewHolder, MapBizC
         childViewHolderMapBiz.itemView.setOnClickListener {
             clickListener?.onItemClickListener(it, data, position)
         }
-        childViewHolderMapBiz.itemView.findViewById<View>(R.id.imgDel).setOnClickListener {
+        childViewHolderMapBiz.itemView.setOnLongClickListener {
             clickListener?.onItemDeleteListener(it, data, position)
+            true
         }
     }
 
