@@ -405,7 +405,7 @@ public final class Utils {
         dialog.setView(dialogView);
         dialog.show();
         EditText etPwd = (EditText) dialogView.findViewById(R.id.textEdit);
-        etPwd.setVisibility(View.GONE);
+        etPwd.setVisibility(View.INVISIBLE);
         TextView textTitle = (TextView) dialogView.findViewById(R.id.textTitle);
         textTitle.setText("请确认是否删除?");
         TextView btnPositive = (TextView) dialogView.findViewById(R.id.btnPositive);

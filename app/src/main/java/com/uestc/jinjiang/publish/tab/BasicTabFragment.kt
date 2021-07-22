@@ -125,9 +125,16 @@ class BasicTabFragment : BaseTabFragment(), OnFolderClick {
         fileDisplayInfo ?: return
         rootDBForBasic ?: return
         for (mapCategoryList in rootDBForBasic) {
-            mapCategoryList.fileList.remove(fileDisplayInfo)
+            if (mapCategoryList.fileList.remove(fileDisplayInfo)) {
+                mapCategoryList.expand = true
+            }
         }
         adapter.setExpandableParentItemList(rootDBForBasic)
+        view?.post {
+            for (mapCategoryList in rootDBForBasic) {
+                mapCategoryList.expand = false
+            }
+        }
     }
 
     override fun onFolderDelClick(v: View, folder: MapCategoryList) {

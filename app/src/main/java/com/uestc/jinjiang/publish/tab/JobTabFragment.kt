@@ -123,9 +123,16 @@ class JobTabFragment : BaseTabFragment(), OnFolderClick {
         fileDisplayInfo ?: return
         rootDBForJob ?: return
         for (mapCategoryList in rootDBForJob) {
-            mapCategoryList.fileList.remove(fileDisplayInfo)
+            if (mapCategoryList.fileList.remove(fileDisplayInfo)) {
+                mapCategoryList.expand = true
+            }
         }
         adapter.setExpandableParentItemList(rootDBForJob)
+        view?.post {
+            for (mapCategoryList in rootDBForJob) {
+                mapCategoryList.expand = false
+            }
+        }
     }
 
     override fun onFolderDelClick(v: View, folder: MapCategoryList) {
