@@ -39,7 +39,9 @@ class MapBizTabAdapter : ExpandableRecyclerAdapter<MapBizFileViewHolder, MapBizC
             true
         }
         parentViewHolder.itemView.findViewById<View>(R.id.imgDelFolder).setOnClickListener {
-            parentLongClick?.onFolderDelClick(it, data)
+            Utils.delDialog(it.context!! as Activity) { _ ->
+                parentLongClick?.onFolderDelClick(it, data)
+            }
         }
     }
 
