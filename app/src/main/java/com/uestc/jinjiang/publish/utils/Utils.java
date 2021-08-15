@@ -69,6 +69,7 @@ public final class Utils {
     public static void openFile(Activity context, FileDisplayInfo fileDisplayInfo) {
         if (fileDisplayInfo.getFilePath().endsWith("ppt")
                 || fileDisplayInfo.getFilePath().endsWith("pptx")
+                || fileDisplayInfo.getFilePath().endsWith("pdf")
                 || fileDisplayInfo.getFilePath().endsWith("doc")
                 || fileDisplayInfo.getFilePath().endsWith("docx")
                 || fileDisplayInfo.getFilePath().endsWith("xls")
