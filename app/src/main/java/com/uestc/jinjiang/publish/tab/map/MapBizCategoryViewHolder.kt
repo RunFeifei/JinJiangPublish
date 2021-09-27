@@ -14,7 +14,7 @@ class MapBizCategoryViewHolder(view: View) : ChildViewHolder(view) {
         var fileName = fileDisplayInfo.fileDesc
         fileName = try {
             var indexOf = fileName.indexOf("__")
-            fileName.substring(indexOf + 1)
+            fileName.substring(indexOf)
         } catch (e: Exception) {
             fileDisplayInfo.fileDesc
         }

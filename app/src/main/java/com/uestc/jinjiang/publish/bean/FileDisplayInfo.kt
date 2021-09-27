@@ -65,7 +65,7 @@ class FileDisplayInfo : Serializable {
             var fileName = file.name
             fileName = try {
                 var indexOf = fileName.indexOf("__")
-                fileName.substring(indexOf + 1)
+                fileName.substring(indexOf + 2)
             } catch (e: Exception) {
                 file.name
             }
