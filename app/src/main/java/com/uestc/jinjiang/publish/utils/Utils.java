@@ -25,15 +25,14 @@ import android.util.Base64;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
-import com.loading.dialog.AndroidLoadingDialog;
 import com.tencent.smtt.sdk.TbsVideo;
 import com.uestc.jinjiang.publish.R;
 import com.uestc.jinjiang.publish.bean.FileDisplayInfo;
@@ -59,12 +58,6 @@ import static com.uestc.jinjiang.publish.extend.FileSelectKt.RC_PHOTO_PICKER_PER
 
 public final class Utils {
 
-    public static AndroidLoadingDialog loading(AppCompatActivity appCompatActivity) {
-        AndroidLoadingDialog iosLoadingDialog = new AndroidLoadingDialog().setOnTouchOutside(false);
-        iosLoadingDialog.show(appCompatActivity.getFragmentManager(), "AndroidLoadingDialog");
-        iosLoadingDialog.dismissAllowingStateLoss();
-        return iosLoadingDialog;
-    }
 
     public static void openFile(Activity context, FileDisplayInfo fileDisplayInfo) {
         if (fileDisplayInfo.getFilePath().endsWith("ppt")
@@ -350,6 +343,7 @@ public final class Utils {
             Cursor cursor = contentResolver.query(uri, null, null, null, null);
             if (cursor.moveToFirst()) {
                 String displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                displayName = System.currentTimeMillis() + Math.round((Math.random() + 1) * 1000) + "__" + displayName;
                 try {
                     InputStream is = contentResolver.openInputStream(uri);
                     File cache = new File(context.getExternalCacheDir().getAbsolutePath(), displayName);
@@ -364,6 +358,40 @@ public final class Utils {
             }
         }
         return file.getAbsolutePath();
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    public static File uriToFileApiQ(Uri uri, Context context) {
+        File file = null;
+        if (uri == null) return file;
+        //android10以上转换
+        if (uri.getScheme().equals(ContentResolver.SCHEME_FILE)) {
+            file = new File(uri.getPath());
+        } else if (uri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
+            //把文件复制到沙盒目录
+            ContentResolver contentResolver = context.getContentResolver();
+            String displayName = System.currentTimeMillis() + Math.round((Math.random() + 1) * 1000)
+                    + "." + MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(uri));
+
+//            注释掉的方法可以获取到原文件的文件名，但是比较耗时
+//            Cursor cursor = contentResolver.query(uri, null, null, null, null);
+//            if (cursor.moveToFirst()) {
+//                String displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));}
+
+            try {
+                InputStream is = contentResolver.openInputStream(uri);
+                File cache = new File(context.getCacheDir().getAbsolutePath(), displayName);
+                FileOutputStream fos = new FileOutputStream(cache);
+                FileUtils.copy(is, fos);
+                file = cache;
+                fos.close();
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return file;
     }
 
     public static void dialog(Activity context, String title, String positive, OnSearchListener positiveClick) {

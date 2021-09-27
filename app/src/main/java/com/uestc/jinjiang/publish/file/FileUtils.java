@@ -433,14 +433,6 @@ public class FileUtils {
         return cacheRootPath;
     }
 
-    public static String getMusicCachePath(Context context) {
-        File imgDir = new File(createCachePath(context), Environment.DIRECTORY_MUSIC);
-        File file = new File(imgDir.getAbsolutePath());
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-        return file.getPath();
-    }
 
     /**
      * 获取图片裁剪缓存目录

@@ -11,7 +11,14 @@ import java.text.SimpleDateFormat
 
 class MapBizCategoryViewHolder(view: View) : ChildViewHolder(view) {
     fun bind(fileDisplayInfo: FileDisplayInfo) {
-        itemView.findViewById<TextView>(R.id.textDesc).text = fileDisplayInfo.fileDesc
+        var fileName = fileDisplayInfo.fileDesc
+        fileName = try {
+            var indexOf = fileName.indexOf("__")
+            fileName.substring(indexOf + 1)
+        } catch (e: Exception) {
+            fileDisplayInfo.fileDesc
+        }
+        itemView.findViewById<TextView>(R.id.textDesc).text = fileName
         itemView.findViewById<TextView>(R.id.textTime).text = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(fileDisplayInfo.fileTime)
         var ic = R.drawable.icon_file_unknown
         ic = if (fileDisplayInfo.fileType == FileTypeEnum.FILE_TYPE_PDF.code) R.drawable.ic_pdf else ic

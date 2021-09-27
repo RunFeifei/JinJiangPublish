@@ -37,7 +37,6 @@ fun getDbPath(key: String): String {
 fun deleteALlDb(context: Activity): Boolean {
     val dbPath = FileUtils.createAppPath().absolutePath
     if (EasyPermissions.hasPermissions(context, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-        deleteFile(File(dbPath))
         return deleteFile(File(dbPath))
     } else {
         EasyPermissions.requestPermissions(context, context.getString(R.string.rationale_doc_picker), RC_FILE_PICKER_PERM, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
