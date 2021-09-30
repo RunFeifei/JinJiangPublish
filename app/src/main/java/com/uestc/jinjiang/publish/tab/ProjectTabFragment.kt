@@ -56,10 +56,7 @@ class ProjectTabFragment : BaseTabFragment(), OnFolderClick {
         listView.layoutManager = LinearLayoutManager(activity)
         adapter.setExpandCollapseListener(object : ExpandCollapseListener {
             override fun onListItemExpanded(position: Int) {
-                if (adapter.getParentItemList().size - 1 == position) {
-                    listView.scrollToPosition(adapter.getParentItemList().size - 1);
-                    listView.scrollBy(0, Utils.dp2px(context, 480f))
-                }
+
             }
 
             override fun onListItemCollapsed(position: Int) {
