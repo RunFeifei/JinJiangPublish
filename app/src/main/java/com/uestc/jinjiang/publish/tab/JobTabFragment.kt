@@ -114,10 +114,7 @@ class JobTabFragment : BaseTabFragment(), OnFolderClick {
 
     override fun onResume() {
         super.onResume()
-        if (justSearched) {
-            justSearched = false
-            adapter?.setExpandableParentItemList(rootDBForJob)
-        }
+        adapter?.setExpandableParentItemList(rootDBForJob)
     }
 
     override fun onItemDeleteListener(view: View?, fileDisplayInfo: FileDisplayInfo?, position: Int) {

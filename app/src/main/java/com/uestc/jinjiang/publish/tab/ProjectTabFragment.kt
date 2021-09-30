@@ -114,10 +114,8 @@ class ProjectTabFragment : BaseTabFragment(), OnFolderClick {
 
     override fun onResume() {
         super.onResume()
-        if (justSearched) {
-            justSearched = false
-            adapter?.setExpandableParentItemList(rootDBForProject)
-        }
+        adapter?.setExpandableParentItemList(rootDBForProject)
+
     }
 
     override fun onItemDeleteListener(view: View?, fileDisplayInfo: FileDisplayInfo?, position: Int) {
