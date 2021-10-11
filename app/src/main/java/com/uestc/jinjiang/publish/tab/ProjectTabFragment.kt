@@ -120,6 +120,10 @@ class ProjectTabFragment : BaseTabFragment(), OnFolderClick {
         }
     }
 
+    override fun refresh() {
+        adapter?.setExpandableParentItemList(rootDBForProject)
+    }
+
     override fun onItemDeleteListener(view: View?, fileDisplayInfo: FileDisplayInfo?, position: Int) {
         fileDisplayInfo ?: return
         rootDBForProject ?: return
