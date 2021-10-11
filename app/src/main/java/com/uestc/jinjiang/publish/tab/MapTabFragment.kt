@@ -118,7 +118,10 @@ class MapTabFragment : BaseTabFragment(), OnFolderClick {
 
     override fun onResume() {
         super.onResume()
-        adapter?.setExpandableParentItemList(rootDBForMap)
+        if (justSearched) {
+            justSearched = false
+            adapter?.setExpandableParentItemList(rootDBForMap)
+        }
     }
 
     override fun onItemDeleteListener(view: View?, fileDisplayInfo: FileDisplayInfo?, position: Int) {

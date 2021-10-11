@@ -116,7 +116,10 @@ class BasicTabFragment : BaseTabFragment(), OnFolderClick {
 
     override fun onResume() {
         super.onResume()
-        adapter?.setExpandableParentItemList(rootDBForBasic)
+        if (justSearched) {
+            justSearched = false
+            adapter?.setExpandableParentItemList(rootDBForBasic)
+        }
     }
 
     override fun onItemDeleteListener(view: View?, fileDisplayInfo: FileDisplayInfo?, position: Int) {
