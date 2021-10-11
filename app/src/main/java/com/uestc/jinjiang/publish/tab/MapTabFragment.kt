@@ -11,6 +11,7 @@ import com.uestc.jinjiang.publish.tab.map.MapCategoryList
 import com.uestc.jinjiang.publish.tab.map.OnFolderClick
 import com.uestc.jinjiang.publish.utils.Utils
 import com.uestc.jinjiang.publish.utils.mapDisk2db
+import com.uestc.jinjiang.publish.utils.rootDBForJob
 import com.uestc.jinjiang.publish.utils.rootDBForMap
 
 
@@ -122,6 +123,10 @@ class MapTabFragment : BaseTabFragment(), OnFolderClick {
             justSearched = false
             adapter?.setExpandableParentItemList(rootDBForMap)
         }
+    }
+
+    override fun refresh() {
+        adapter?.setExpandableParentItemList(rootDBForMap)
     }
 
     override fun onItemDeleteListener(view: View?, fileDisplayInfo: FileDisplayInfo?, position: Int) {

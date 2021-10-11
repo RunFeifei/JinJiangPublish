@@ -120,6 +120,10 @@ class JobTabFragment : BaseTabFragment(), OnFolderClick {
         }
     }
 
+    override fun refresh() {
+        adapter?.setExpandableParentItemList(rootDBForJob)
+    }
+
     override fun onItemDeleteListener(view: View?, fileDisplayInfo: FileDisplayInfo?, position: Int) {
         fileDisplayInfo ?: return
         rootDBForJob ?: return

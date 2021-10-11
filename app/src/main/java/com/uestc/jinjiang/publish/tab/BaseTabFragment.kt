@@ -159,6 +159,7 @@ open abstract class BaseTabFragment : Fragment(), OnItemClickListener {
 
     abstract fun onAddFileSelect(file: FileDisplayInfo?)
     abstract fun bizType(): BizTypeEnum
+    abstract fun refresh()
 
 
     override fun onItemClickListener(view: View?, fileDisplayInfo: FileDisplayInfo?, position: Int) {

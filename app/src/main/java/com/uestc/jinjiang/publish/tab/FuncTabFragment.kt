@@ -121,6 +121,10 @@ class FuncTabFragment : BaseTabFragment(), OnFolderClick {
         }
     }
 
+    override fun refresh() {
+        adapter?.setExpandableParentItemList(rootDBForFunc)
+    }
+
     override fun onItemDeleteListener(view: View?, fileDisplayInfo: FileDisplayInfo?, position: Int) {
         fileDisplayInfo ?: return
         rootDBForFunc ?: return

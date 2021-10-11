@@ -122,6 +122,10 @@ class BasicTabFragment : BaseTabFragment(), OnFolderClick {
         }
     }
 
+    override fun refresh() {
+        adapter?.setExpandableParentItemList(rootDBForBasic)
+    }
+
     override fun onItemDeleteListener(view: View?, fileDisplayInfo: FileDisplayInfo?, position: Int) {
         fileDisplayInfo ?: return
         rootDBForBasic ?: return

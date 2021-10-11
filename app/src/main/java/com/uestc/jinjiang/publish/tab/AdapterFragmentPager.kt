@@ -15,7 +15,7 @@ import com.uestc.jinjiang.publish.bean.BizTypeEnum
 class AdapterFragmentPager(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {
 
-    private val fragments: SparseArray<Fragment> = SparseArray()
+    val fragments: SparseArray<BaseTabFragment> = SparseArray()
 
     init {
         fragments.put(BizTypeEnum.BIZ_TYPE_BASIC.key, BasicTabFragment())

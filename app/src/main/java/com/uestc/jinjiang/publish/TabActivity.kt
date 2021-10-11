@@ -26,12 +26,19 @@ class TabActivity : BaseActivity() {
     private fun init() {
         ViewPager2Delegate.install(binding.viewPager2, binding.tabLayout)
         binding.tabLayout.orientation = LinearLayout.VERTICAL
-        binding.viewPager2.adapter = AdapterFragmentPager(this)
+        val adapterFragmentPager = AdapterFragmentPager(this)
+        binding.viewPager2.adapter = adapterFragmentPager
         binding.viewPager2.offscreenPageLimit = 4
         binding.viewPager2.isUserInputEnabled = false
         binding.viewPager2.orientation = ViewPager2.ORIENTATION_VERTICAL
         binding.viewPager2.setCurrentItem(intent.getIntExtra("index", 0), false)
         binding.icHome.setOnClickListener { finish() }
+        binding.viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                adapterFragmentPager.fragments[position].refresh()
+            }
+        })
     }
 
     override fun onStop() {
